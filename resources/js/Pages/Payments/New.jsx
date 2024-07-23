@@ -4,32 +4,17 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
-import { Transition } from "@headlessui/react";
-import SecondaryButton from "@/Components/SecondaryButton";
+import { Head, useForm } from "@inertiajs/react";
 
-export default function Edit({
-    auth,
-    categories,
-    products,
-    order,
-    orderProducts,
-}) {
-    const { data, setData, put, processing, errors, recentlySuccessful } =
-        useForm({
-            customer_name: order.customer_name,
-            products: orderProducts.map((product) => ({
-                product_id: product.product_id,
-                quantity: product.quantity,
-            })),
-        });
+export default function New({ auth, categories, products }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        customer_name: "",
+        products: [],
+    });
 
     const [quantities, setQuantities] = useState(
         products.reduce((acc, product) => {
-            const orderedProduct = orderProducts.find(
-                (op) => op.product_id === product.id
-            );
-            acc[product.id] = orderedProduct ? orderedProduct.quantity : 0;
+            acc[product.id] = 0;
             return acc;
         }, {})
     );
@@ -61,7 +46,9 @@ export default function Edit({
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("orders.update", order.id));
+        post(route("orders.store"), {
+            onSuccess: () => reset(),
+        });
     };
 
     const filteredProducts = products.reduce((acc, product) => {
@@ -91,15 +78,31 @@ export default function Edit({
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                            <form onSubmit={submit} className="mt-6 space-y-6">
+                        <div className="p-6 bg-white">
+                            <form onSubmit={submit}>
+                                <div>
+                                    <InputLabel
+                                        htmlFor="customer_name"
+                                        value="Customer Name"
+                                    />
+                                    <TextInput
+                                        id="customer_name"
+                                        type="text"
+                                        name="customer_name"
+                                        value={data.customer_name}
+                                        onChange={(e) =>
+                                            setData(
+                                                "customer_name",
+                                                e.target.value
+                                            )
+                                        }
+                                        className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                    />
+                                    <InputError
+                                        message={errors.customer_name}
+                                    />
+                                </div>
                                 <dl className="mt-4 border-t border-gray-200">
-                                    <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                                        <dt className="text-sm font-semibold text-gray-900">
-                                            Customer Name :{" "}
-                                            {data.customer_name}
-                                        </dt>
-                                    </div>
                                     {Object.entries(filteredProducts).map(
                                         ([category, products]) => (
                                             <div key={category}>
@@ -136,18 +139,10 @@ export default function Edit({
                                                                     </span>
                                                                 </button>
                                                                 <span className="mx-2 text-gray-700">
-                                                                    {orderProducts.product_id ===
-                                                                    product.id
-                                                                        ? orderProducts.quantity
-                                                                        : quantities[
-                                                                              product
-                                                                                  .id
-                                                                          ]
-                                                                        ? quantities[
-                                                                              product
-                                                                                  .id
-                                                                          ]
-                                                                        : 0}
+                                                                    {quantities[
+                                                                        product
+                                                                            .id
+                                                                    ] || 0}
                                                                 </span>
                                                                 <button
                                                                     type="button"
@@ -174,28 +169,10 @@ export default function Edit({
                                         )
                                     )}
                                 </dl>
-                                <div className="flex items-center justify-end gap-4">
+                                <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
-                                        Save
+                                        Create Order
                                     </PrimaryButton>
-
-                                    <Transition
-                                        show={recentlySuccessful}
-                                        enter="transition ease-in-out"
-                                        enterFrom="opacity-0"
-                                        leave="transition ease-in-out"
-                                        leaveTo="opacity-0"
-                                    >
-                                        <p className="text-sm text-gray-600">
-                                            Saved.
-                                        </p>
-                                    </Transition>
-
-                                    <Link href={route("orders.index")}>
-                                        <SecondaryButton>
-                                            Cancel
-                                        </SecondaryButton>
-                                    </Link>
                                 </div>
                             </form>
                         </div>

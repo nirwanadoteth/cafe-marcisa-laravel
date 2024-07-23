@@ -8,7 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import SelectInput from "@/Components/SelectInput";
 
-export default function Index({ auth, order }) {
+export default function Show({ auth, order }) {
     return (
         <AuthenticatedLayout
             user={auth.user}

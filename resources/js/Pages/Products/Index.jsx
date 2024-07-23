@@ -10,7 +10,7 @@ import SelectInput from "@/Components/SelectInput";
 
 export default function Index({ auth, products, categories }) {
     const { data, setData, post, patch, processing, errors, reset } = useForm({
-        category_id: "",
+        category_id: categories[0].id,
         name: "",
         price: "",
         status: "",
@@ -147,7 +147,10 @@ export default function Index({ auth, products, categories }) {
                                             {product.category.name}
                                         </dt>
                                         <dt className="text-sm text-gray-900">
-                                            {product.price}
+                                            Rp.{" "}
+                                            {parseInt(
+                                                product.price
+                                            ).toLocaleString()}
                                         </dt>
                                         <dt className="text-sm text-gray-900">
                                             {product.status}
@@ -159,8 +162,7 @@ export default function Index({ auth, products, categories }) {
                                                 }
                                                 disabled={processing}
                                             >
-                                                {product.status ===
-                                                "Active" ? (
+                                                {product.status === "Active" ? (
                                                     <i
                                                         className="fas fa-toggle-on"
                                                         style={{

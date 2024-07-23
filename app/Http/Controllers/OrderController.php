@@ -51,7 +51,7 @@ class OrderController extends Controller
                 'user_id' => Auth::user()->id,
                 'customer_name' => $request->customer_name,
                 'total_price' => 0, // This will be updated later
-                'status' => 'pending',
+                'status' => 'Unpaid',
             ]);
 
             $totalPrice = 0;

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('customer_name');
             $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->enum('status', ['Unpaid', 'Completed'])->default('Unpaid');
             $table->timestamps();
         });
     }

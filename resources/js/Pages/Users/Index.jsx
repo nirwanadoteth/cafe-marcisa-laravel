@@ -14,7 +14,7 @@ export default function Index({ auth, users }) {
         username: "",
         password: "",
         password_confirmation: "",
-        role: "",
+        role: "Admin",
     });
 
     useEffect(() => {
