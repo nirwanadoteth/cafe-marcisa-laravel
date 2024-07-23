@@ -39,7 +39,7 @@ class PaymentController extends Controller
             'status' => 'Completed',
         ]);
 
-        return redirect()->route('payments.index')->with('success', 'Payment has been successfully processed.');
+        return redirect()->route('payments.show');
     }
 
     /**
@@ -47,7 +47,9 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+        return Inertia::render('Payments/Show', [
+            'payment' => Payment::with('order.products.categories')->findOrFail($payment->id),
+        ]);
     }
 
     /**

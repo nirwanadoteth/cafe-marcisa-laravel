@@ -69,7 +69,7 @@ export default function Index({ auth, orders }) {
                                                 )}
                                                 className="text-indigo-600 hover:text-indigo-900 mr-2"
                                             >
-                                                <SecondaryButton>
+                                                <SecondaryButton disabled={order.status === "Completed"}>
                                                     Edit
                                                 </SecondaryButton>
                                             </Link>
