@@ -6,6 +6,7 @@ use App\Enums\Status;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -18,7 +19,7 @@ class ProdukController extends Controller
     {
         return Inertia::render('Products/Index', [
             'produk' => Produk::with('kategori')->get(),
-            'kategori' => Kategori::where('Status', Status::ACTIVE)->get(),
+            'kategori' => Kategori::orderBy('Nama')->get(),
         ]);
     }
 
@@ -41,9 +42,14 @@ class ProdukController extends Controller
             'Harga' => 'required|numeric',
         ]);
 
-        Produk::create($validated);
+        DB::transaction(function () use ($validated) {
+            $kategori = Kategori::findOrFail($validated['Id_Kategori']);
+            $status = $kategori->Status == Status::ACTIVE ? Status::ACTIVE : Status::INACTIVE;
 
-        return redirect(route('produk.index'));
+            Produk::create(array_merge($validated, ['Status' => $status]));
+        });
+
+        return redirect(route('produk.index'))->with('success', 'Product created successfully.');
     }
 
     /**
@@ -60,7 +66,7 @@ class ProdukController extends Controller
     public function edit(Produk $produk)
     {
         return Inertia::render('Products/Edit', [
-            'produk' => $produk,
+            'produk' => $produk::with('kategori')->find($produk->Id_Kategori),
             'kategori' => Kategori::orderBy('Nama')->get(),
         ]);
     }
@@ -76,7 +82,7 @@ class ProdukController extends Controller
             'Harga' => 'required|numeric',
             'Status' => [Rule::enum(Status::class)],
         ]);
-
+        
         $produk->update($validated);
 
         return redirect(route('produk.index'));

@@ -59,7 +59,6 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
             };
         });
     };
-
     const submit = (e) => {
         e.preventDefault();
 
@@ -79,6 +78,7 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
         return acc;
     }, {});
 
+    
     return (
         <AuthenticatedLayout
             user={auth.user}

@@ -16,7 +16,6 @@ export default function Edit({ auth, kategori }) {
             Status: kategori.Status,
         });
 
-    console.log(kategori);
     const submit = (e) => {
         e.preventDefault();
 

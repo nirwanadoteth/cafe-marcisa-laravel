@@ -5,7 +5,7 @@ import { Head, Link } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { format } from "date-fns";
 
-export default function Index({ auth, pesanan, produk }) {
+export default function Index({ auth, pesanan, produk, kategori }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -22,7 +22,7 @@ export default function Index({ auth, pesanan, produk }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white text-right">
                             <Link href={route("pesanan.create")}>
-                                <PrimaryButton disabled={produk.length === 0}>
+                                <PrimaryButton disabled={kategori.length === 0 || produk.length === 0}>
                                     Add Order
                                 </PrimaryButton>
                             </Link>

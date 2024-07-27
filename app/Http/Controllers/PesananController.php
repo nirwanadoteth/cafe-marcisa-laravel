@@ -22,6 +22,7 @@ class PesananController extends Controller
         return Inertia::render("Orders/Index", [
             'pesanan' => Pesanan::with(['pembeli', 'nota'])->orderByDesc('Tanggal')->get(),
             'produk' => Produk::where('Status', 'Active')->get(),
+            'kategori' => Kategori::where('Status', 'Active')->get(),
         ]);
     }
 
@@ -31,8 +32,8 @@ class PesananController extends Controller
     public function create()
     {
         return Inertia::render('Orders/New', [
-            'kategori' => Kategori::orderBy('Nama')->where('Status', 'Active')->get(),
-            'produk' => Produk::orderBy('Nama')->where('Status', 'Active')->get(),
+            'kategori' => Kategori::where('Status', 'Active')->orderBy('Nama')->get(),
+            'produk' => Produk::where('Status', 'Active')->orderBy('Nama')->get(),
         ]);
     }
 

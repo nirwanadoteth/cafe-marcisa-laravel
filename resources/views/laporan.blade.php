@@ -53,7 +53,7 @@
 </head>
 
 <body class="items-center">
-    <p class="text-center font-medium">Laporan Penjualan Cafe Marcisa</p>
+    <p class="text-center font-medium">Cafe Marcisa Report</p>
     <p class="text-center font-medium"> {{ $selectedLabel }} </p>
     <table class="w-full border-collapse" border="1">
         <thead>
@@ -62,16 +62,16 @@
                     No
                 </td>
                 <td class="font-medium">
-                    Nama Pembeli
+                    Customer Name
                 </td>
                 <td class="font-medium">
                     Total
                 </td>
                 <td class="font-medium">
-                    Diterima
+                    Cash
                 </td>
                 <td class="font-medium">
-                    Kembali
+                    Change
                 </td>
             </tr>
         </thead>

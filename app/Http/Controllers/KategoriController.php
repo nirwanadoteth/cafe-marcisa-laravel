@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\Status;
 use App\Models\Kategori;
+use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -70,7 +72,12 @@ class KategoriController extends Controller
             'Status' => [Rule::enum(Status::class)],
         ]);
 
-        $kategori->update($validated);
+        DB::transaction(function () use ($validated, $kategori) {
+            $kategori->update($validated);
+
+            Produk::where('Id_Kategori', $kategori->Id_Kategori)
+                ->update(['Status' => $validated['Status']]);
+        });
 
         return redirect(route('kategori.index'))->with('success', 'Category updated successfully.');
     }
