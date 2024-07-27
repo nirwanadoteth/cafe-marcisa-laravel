@@ -14,6 +14,10 @@
             font-weight: 500;
         }
 
+        .font-semibold {
+            font-weight: 600;
+        }
+
         .text-center {
             text-align: center;
         }
@@ -84,10 +88,8 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2" class="font-medium">Total</td>
-                <td class="font-medium">{{ number_format($nota->sum('Total_Harga')) }}</td>
-                <td class="font-medium">{{ number_format($nota->sum('Diterima')) }}</td>
-                <td class="font-medium">{{ number_format($nota->sum('Kembali')) }}</td>
+                <td colspan="2" class="font-semibold">TOTAL</td>
+                <td class="font-medium" colspan="3">{{ number_format($nota->sum('Total_Harga')) }}</td>
             </tr>
     </table>
     <script>

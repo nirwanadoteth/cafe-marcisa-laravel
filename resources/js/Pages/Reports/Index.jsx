@@ -110,6 +110,19 @@ const NotaList = ({ nota }) => (
                 </dt>
             </div>
         )}
+        {nota.length > 0 && (
+            <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center">
+                <dt className="font-semibold text-sm text-gray-900 sm:col-span-3">
+                    TOTAL
+                </dt>
+
+                <dt className="font-medium text-sm text-gray-900 sm:col-span-3">
+                    {parseInt(
+                        nota.reduce((acc, curr) => acc + curr.Total_Harga, 0)
+                    ).toLocaleString()}
+                </dt>
+            </div>
+        )}
     </>
 );
 

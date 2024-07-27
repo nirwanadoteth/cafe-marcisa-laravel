@@ -96,8 +96,7 @@ export default function Edit({
                                 <dl className="mt-4 border-t border-gray-200">
                                     <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-semibold text-gray-900">
-                                            Customer Name :{" "}
-                                            {data.customer_name}
+                                            Customer Name : {data.customer_name}
                                         </dt>
                                     </div>
                                     {Object.entries(filteredProducts).map(

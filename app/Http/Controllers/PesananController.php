@@ -21,6 +21,7 @@ class PesananController extends Controller
     {
         return Inertia::render("Orders/Index", [
             'pesanan' => Pesanan::with(['pembeli', 'nota'])->orderByDesc('Tanggal')->get(),
+            'produk' => Produk::where('Status', 'Active')->get(),
         ]);
     }
 
@@ -91,8 +92,8 @@ class PesananController extends Controller
     {
         return Inertia::render('Orders/Edit', [
             'pesanan' => Pesanan::with(['pembeli', 'rincian_pesanan.produk'])->find($pesanan->Id_Pesanan),
-            'kategori' => Kategori::orderBy('Nama')->get(),
-            'produk' => Produk::orderBy('Nama')->get(),
+            'kategori' => Kategori::orderBy('Nama')->where('Status', 'Active')->get(),
+            'produk' => Produk::orderBy('Nama')->where('Status', 'Active')->get(),
         ]);
     }
 

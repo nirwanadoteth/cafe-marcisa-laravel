@@ -98,7 +98,7 @@ export default function Index({ auth, produk, kategori }) {
                                     <InputError message={errors.Harga} />
                                 </div>
                                 <div className="mt-4 text-center">
-                                    <PrimaryButton disabled={processing}>
+                                    <PrimaryButton disabled={processing || kategori.length === 0}>
                                         Add Product
                                     </PrimaryButton>
                                 </div>
@@ -112,7 +112,7 @@ export default function Index({ auth, produk, kategori }) {
                                     name="search"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="Search categories"
+                                    placeholder="Search products"
                                     className="mb-4 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                             </div>

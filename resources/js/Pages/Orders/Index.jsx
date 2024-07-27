@@ -5,7 +5,7 @@ import { Head, Link } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { format } from "date-fns";
 
-export default function Index({ auth, pesanan }) {
+export default function Index({ auth, pesanan, produk }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -22,7 +22,9 @@ export default function Index({ auth, pesanan }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white text-right">
                             <Link href={route("pesanan.create")}>
-                                <PrimaryButton>Add Order</PrimaryButton>
+                                <PrimaryButton disabled={produk.length === 0}>
+                                    Add Order
+                                </PrimaryButton>
                             </Link>
                         </div>
                         <div className="p-6 border-t border-gray-200">
@@ -45,62 +47,62 @@ export default function Index({ auth, pesanan }) {
                                     </dt>
                                 </div>
                                 {pesanan.length > 0 ? (
-                                pesanan.map((pesanan) => (
-                                    <div
-                                        key={pesanan.Id_Pesanan}
-                                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
-                                    >
-                                        <dt className="text-sm text-gray-900 sm:col-span-3">
-                                            {pesanan.pembeli.Nama}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {format(
-                                                new Date(pesanan.Tanggal),
-                                                "dd MMM yyyy HH:mm:ss"
-                                            )}
-                                        </dt>
-                                        {/* <dt className="text-sm text-gray-900 sm:col-span-1">
+                                    pesanan.map((pesanan) => (
+                                        <div
+                                            key={pesanan.Id_Pesanan}
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
+                                        >
+                                            <dt className="text-sm text-gray-900 sm:col-span-3">
+                                                {pesanan.pembeli.Nama}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {format(
+                                                    new Date(pesanan.Tanggal),
+                                                    "dd MMM yyyy HH:mm:ss"
+                                                )}
+                                            </dt>
+                                            {/* <dt className="text-sm text-gray-900 sm:col-span-1">
                                             {order.status}
                                         </dt> */}
-                                        <dt className="text-sm text-gray-900 sm:col-span-1">
-                                            <Link
-                                                href={route(
-                                                    "pesanan.edit",
-                                                    pesanan.Id_Pesanan
-                                                )}
-                                                className="text-indigo-600 hover:text-indigo-900 mr-2"
-                                            >
-                                                <SecondaryButton
-                                                    disabled={
-                                                        pesanan.nota
-                                                            ? true
-                                                            : false
-                                                    }
+                                            <dt className="text-sm text-gray-900 sm:col-span-1">
+                                                <Link
+                                                    href={route(
+                                                        "pesanan.edit",
+                                                        pesanan.Id_Pesanan
+                                                    )}
+                                                    className="text-indigo-600 hover:text-indigo-900 mr-2"
                                                 >
-                                                    Edit
-                                                </SecondaryButton>
-                                            </Link>
-                                            <Link
-                                                href={route(
-                                                    "pesanan.show",
-                                                    pesanan.Id_Pesanan
-                                                )}
-                                                className="text-indigo-600 hover:text-indigo-900"
-                                            >
-                                                <SecondaryButton>
-                                                    Show
-                                                </SecondaryButton>
-                                            </Link>
+                                                    <SecondaryButton
+                                                        disabled={
+                                                            pesanan.nota
+                                                                ? true
+                                                                : false
+                                                        }
+                                                    >
+                                                        Edit
+                                                    </SecondaryButton>
+                                                </Link>
+                                                <Link
+                                                    href={route(
+                                                        "pesanan.show",
+                                                        pesanan.Id_Pesanan
+                                                    )}
+                                                    className="text-indigo-600 hover:text-indigo-900"
+                                                >
+                                                    <SecondaryButton>
+                                                        Show
+                                                    </SecondaryButton>
+                                                </Link>
+                                            </dt>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="bg-white px-4 py-5 sm:px-6">
+                                        <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                            No orders found.
                                         </dt>
                                     </div>
-                                ))
-                            ) : (
-                                <div className="bg-white px-4 py-5 sm:px-6">
-                                    <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
-                                        No orders found.
-                                    </dt>
-                                </div>
-                            )}
+                                )}
                             </dl>
                         </div>
                     </div>

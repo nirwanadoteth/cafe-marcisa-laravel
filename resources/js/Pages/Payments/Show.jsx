@@ -9,11 +9,19 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { Transition } from "@headlessui/react";
 
 export default function Show({ auth, order }) {
-    const { data, setData, post, processing, errors, recentlySuccessful, setError, clearErrors } =
-        useForm({
-            order_id: order.id,
-            pay: "",
-        });
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        recentlySuccessful,
+        setError,
+        clearErrors,
+    } = useForm({
+        order_id: order.id,
+        pay: "",
+    });
 
     console.log(order);
     const calculateSubTotal = () => {

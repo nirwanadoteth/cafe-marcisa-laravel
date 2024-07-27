@@ -11,7 +11,15 @@ import DangerButton from "@/Components/DangerButton";
 import { Dialog, DialogBackdrop, DialogTitle } from "@headlessui/react";
 
 export default function Index({ auth, user }) {
-    const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        delete: destroy,
+        processing,
+        errors,
+        reset,
+    } = useForm({
         Username: "",
         Password: "",
         password_confirmation: "",
@@ -45,7 +53,7 @@ export default function Index({ auth, user }) {
 
     const confirmDelete = () => {
         destroy(route("user.destroy", userIdToDelete), {
-            onSuccess: () => closeModal()
+            onSuccess: () => closeModal(),
         });
     };
 
@@ -196,40 +204,48 @@ export default function Index({ auth, user }) {
                                         Actions
                                     </dt>
                                 </div>
-                                {user.map((user) => (
-                                    <div
-                                        key={user.Id_User}
-                                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
-                                    >
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {user.Username}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {user.Role}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            <Link
-                                                href={route(
-                                                    "user.edit",
-                                                    user.Id_User
-                                                )}
-                                            >
-                                                <SecondaryButton>
-                                                    Edit
-                                                </SecondaryButton>
-                                            </Link>
-                                            {/* delete button */}
-                                            <DangerButton
-                                                onClick={() =>
-                                                    openModal(user.Id_User)
-                                                }
-                                                className="ml-2"
-                                            >
-                                                Delete
-                                            </DangerButton>
+                                {user.length > 0 ? (
+                                    user.map((user) => (
+                                        <div
+                                            key={user.Id_User}
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
+                                        >
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {user.Username}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {user.Role}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                <Link
+                                                    href={route(
+                                                        "user.edit",
+                                                        user.Id_User
+                                                    )}
+                                                >
+                                                    <SecondaryButton>
+                                                        Edit
+                                                    </SecondaryButton>
+                                                </Link>
+                                                {/* delete button */}
+                                                <DangerButton
+                                                    onClick={() =>
+                                                        openModal(user.Id_User)
+                                                    }
+                                                    className="ml-2"
+                                                >
+                                                    Delete
+                                                </DangerButton>
+                                            </dt>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="bg-white px-4 py-5 sm:px-6">
+                                        <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                            No users found.
                                         </dt>
                                     </div>
-                                ))}
+                                )}
                             </dl>
                         </div>
                     </div>

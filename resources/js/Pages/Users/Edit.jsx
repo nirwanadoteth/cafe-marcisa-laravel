@@ -42,7 +42,10 @@ export default function Edit({ auth, user }) {
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <form onSubmit={submit} className="mt-6 space-y-6">
                                 <div>
-                                    <InputLabel htmlFor="Username" value="Username" />
+                                    <InputLabel
+                                        htmlFor="Username"
+                                        value="Username"
+                                    />
                                     <TextInput
                                         id="Username"
                                         type="text"
@@ -66,14 +69,22 @@ export default function Edit({ auth, user }) {
                                         name="current_password"
                                         value={data.current_password}
                                         onChange={(e) =>
-                                            setData("current_password", e.target.value)
+                                            setData(
+                                                "current_password",
+                                                e.target.value
+                                            )
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.current_password} />
+                                    <InputError
+                                        message={errors.current_password}
+                                    />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="Password" value="Password" />
+                                    <InputLabel
+                                        htmlFor="Password"
+                                        value="Password"
+                                    />
                                     <TextInput
                                         id="Password"
                                         type="password"
@@ -97,17 +108,19 @@ export default function Edit({ auth, user }) {
                                         name="password_confirmation"
                                         value={data.password_confirmation}
                                         onChange={(e) =>
-                                            setData("password_confirmation", e.target.value)
+                                            setData(
+                                                "password_confirmation",
+                                                e.target.value
+                                            )
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.password_confirmation} />
+                                    <InputError
+                                        message={errors.password_confirmation}
+                                    />
                                 </div>
                                 <div>
-                                    <InputLabel
-                                        htmlFor="Role"
-                                        value="Role"
-                                    />
+                                    <InputLabel htmlFor="Role" value="Role" />
                                     <SelectInput
                                         id="Role"
                                         name="Role"
@@ -127,7 +140,7 @@ export default function Edit({ auth, user }) {
                                             {
                                                 value: "MKP",
                                                 label: "MKP",
-                                            }
+                                            },
                                         ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />

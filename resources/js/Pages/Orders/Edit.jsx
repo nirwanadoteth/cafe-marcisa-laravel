@@ -40,10 +40,16 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
             const currentQuantity = prevQuantities[productId] || 0;
             const newQuantity = Math.max(currentQuantity + change, 0);
 
-            if (newQuantity < pesanan.rincian_pesanan.find((op) => op.Id_Produk === productId)?.Jumlah) {
+            if (
+                newQuantity <
+                pesanan.rincian_pesanan.find((op) => op.Id_Produk === productId)
+                    ?.Jumlah
+            ) {
                 return {
                     ...prevQuantities,
-                    [productId]: pesanan.rincian_pesanan.find((op) => op.Id_Produk === productId)?.Jumlah,
+                    [productId]: pesanan.rincian_pesanan.find(
+                        (op) => op.Id_Produk === productId
+                    )?.Jumlah,
                 };
             }
 

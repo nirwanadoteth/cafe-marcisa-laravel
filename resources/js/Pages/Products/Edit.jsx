@@ -14,7 +14,7 @@ export default function Edit({ auth, produk, kategori }) {
         useForm({
             Id_Kategori: produk.Id_Kategori,
             Nama: produk.Nama,
-            Harga: produk.Harga,
+            Harga: parseInt(produk.Harga).toLocaleString(),
             Status: produk.Status,
         });
 
@@ -55,13 +55,19 @@ export default function Edit({ auth, produk, kategori }) {
                                     <InputError message={errors.Nama} />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="Id_Kategori" value="Category" />
+                                    <InputLabel
+                                        htmlFor="Id_Kategori"
+                                        value="Category"
+                                    />
                                     <SelectInput
                                         id="Id_Kategori"
                                         name="Id_Kategori"
                                         value={data.Id_Kategori}
                                         onChange={(e) =>
-                                            setData("Id_Kategori", e.target.value)
+                                            setData(
+                                                "Id_Kategori",
+                                                e.target.value
+                                            )
                                         }
                                         options={kategori.map((kategori) => ({
                                             value: kategori.Id_Kategori,

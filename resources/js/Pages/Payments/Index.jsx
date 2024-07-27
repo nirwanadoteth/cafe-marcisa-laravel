@@ -43,44 +43,45 @@ export default function Index({ auth, pesanan }) {
                                         Actions
                                     </dt>
                                 </div>
-                                {pesanan.map((pesanan) => (
-                                    <div
-                                        key={pesanan.Id_Pesanan}
-                                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
-                                    >
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {pesanan.pembeli.Nama}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {format(
-                                                new Date(pesanan.Tanggal),
-                                                "dd MMM yyyy HH:mm:ss"
-                                            )}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-1">
-                                            {pesanan.nota
-                                                ? pesanan.nota.Status
-                                                : "Unpaid"}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-1">
-                                            <Link
-                                                href={route(
-                                                    "nota.process",
-                                                    pesanan.Id_Pesanan
+                                {pesanan.length > 0 ? (
+                                    pesanan.map((pesanan) => (
+                                        <div
+                                            key={pesanan.Id_Pesanan}
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
+                                        >
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {pesanan.pembeli.Nama}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {format(
+                                                    new Date(pesanan.Tanggal),
+                                                    "dd MMM yyyy HH:mm:ss"
                                                 )}
-                                                className="text-indigo-600 hover:text-indigo-900 mr-2"
-                                            >
-                                                <SecondaryButton
-                                                    disabled={
-                                                        pesanan.nota
-                                                            ? true
-                                                            : false
-                                                    }
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-1">
+                                                {pesanan.nota
+                                                    ? pesanan.nota.Status
+                                                    : "Unpaid"}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-1">
+                                                <Link
+                                                    href={route(
+                                                        "nota.process",
+                                                        pesanan.Id_Pesanan
+                                                    )}
+                                                    className="text-indigo-600 hover:text-indigo-900 mr-2"
                                                 >
-                                                    Process
-                                                </SecondaryButton>
-                                            </Link>
-                                            {/* <Link
+                                                    <SecondaryButton
+                                                        disabled={
+                                                            pesanan.nota
+                                                                ? true
+                                                                : false
+                                                        }
+                                                    >
+                                                        Process
+                                                    </SecondaryButton>
+                                                </Link>
+                                                {/* <Link
                                                 href={route(
                                                     "pesanan.show",
                                                     pesanan.Id_Pesanan
@@ -91,9 +92,16 @@ export default function Index({ auth, pesanan }) {
                                                     Show
                                                 </SecondaryButton>
                                             </Link> */}
+                                            </dt>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="bg-white px-4 py-5 sm:px-6">
+                                        <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                            No orders found.
                                         </dt>
                                     </div>
-                                ))}
+                                )}
                             </dl>
                         </div>
                     </div>

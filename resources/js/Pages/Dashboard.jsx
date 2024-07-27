@@ -1,7 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Dashboard({ auth, totalCategories, totalProducts, favProduct, orderToday }) {
+export default function Dashboard({
+    auth,
+    totalCategories,
+    totalProducts,
+    favProduct,
+    orderToday,
+}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
