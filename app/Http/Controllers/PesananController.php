@@ -30,8 +30,8 @@ class PesananController extends Controller
     public function create()
     {
         return Inertia::render('Orders/New', [
-            'kategori' => Kategori::orderBy('Nama')->get(),
-            'produk' => Produk::orderBy('Nama')->get(),
+            'kategori' => Kategori::orderBy('Nama')->where('Status', 'Active')->get(),
+            'produk' => Produk::orderBy('Nama')->where('Status', 'Active')->get(),
         ]);
     }
 

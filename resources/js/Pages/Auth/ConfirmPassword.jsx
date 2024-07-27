@@ -8,12 +8,12 @@ import { Head, useForm } from '@inertiajs/react';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        password: '',
+        Password: '',
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset('Password');
         };
     }, []);
 
@@ -33,19 +33,19 @@ export default function ConfirmPassword() {
 
             <form onSubmit={submit}>
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="Password" value="Password" />
 
                     <TextInput
-                        id="password"
+                        id="Password"
                         type="password"
-                        name="password"
-                        value={data.password}
+                        name="Password"
+                        value={data.Password}
                         className="mt-1 block w-full"
                         isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData('Password', e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.Password} className="mt-2" />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

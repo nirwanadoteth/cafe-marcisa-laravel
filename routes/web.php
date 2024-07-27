@@ -19,19 +19,25 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $totalCategories = Kategori::where('Status', 'Active')->count();
+    $totalProducts = Produk::where('Status', 'Active')->count();
+    $fav = Produk::where('Status', 'Active')->withCount('rincian_pesanan')->orderByDesc('rincian_pesanan_count')->first();
+    $favProduct = $fav ? ($fav->rincian_pesanan_count > 0 ? $fav->Nama : 'No data') : 'No data';
+    $orderToday = Pesanan::whereDate('Tanggal', now('Asia/Jakarta'))->count();
+
     return Inertia::render('Dashboard', [
-        'totalCategories' => Kategori::where('Status', 'Active')->count(),   
-        'totalProducts' => Produk::where('Status', 'Active')->count(),
-        'favProduct' => Produk::withCount('rincian_pesanan')->orderBy('Nama')->first(),
-        'orderToday' => Pesanan::whereDate('Tanggal', now('Asia/Jakarta'))->count(),
+        'totalCategories' => $totalCategories,
+        'totalProducts' => $totalProducts,
+        'favProduct' => $favProduct,
+        'orderToday' => $orderToday,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 Route::middleware('auth')->group(function () {
     Route::resource('kategori', KategoriController::class);

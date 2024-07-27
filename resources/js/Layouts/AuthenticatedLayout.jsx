@@ -4,11 +4,36 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
+import { useForm } from "@inertiajs/react";
+import { Dialog, DialogBackdrop, DialogTitle } from "@headlessui/react";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const {
+        data,
+        setData,
+        post,
+        delete: destroy,
+        processing,
+        reset,
+        errors,
+    } = useForm({});
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const confirmLogout = () => {
+        post(route("logout"));
+    };
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -81,14 +106,20 @@ export default function Authenticated({ user, header, children }) {
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
                             <div className="ms-3 relative">
-                                <Link
+                                {/* <Link
                                     href={route("logout")}
                                     method="post"
                                     as="button"
                                     className="text-gray-500 mr-2"
                                 >
                                     <SecondaryButton>Log Out</SecondaryButton>
-                                </Link>
+                                </Link> */}
+                                <SecondaryButton
+                                    onClick={openModal}
+                                    className="text-gray-500 mr-2"
+                                >
+                                    Logout
+                                </SecondaryButton>
                             </div>
                         </div>
 
@@ -187,19 +218,7 @@ export default function Authenticated({ user, header, children }) {
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                {user.username}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">
-                                {user.role}
-                            </div>
-                        </div>
-
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
-                            </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route("logout")}
@@ -221,6 +240,57 @@ export default function Authenticated({ user, header, children }) {
             )}
 
             <main>{children}</main>
+
+            <Dialog
+                open={isModalOpen}
+                onClose={closeModal}
+                className="fixed z-10 inset-0 overflow-y-auto"
+            >
+                <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+
+                    <span
+                        className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                        aria-hidden="true"
+                    >
+                        &#8203;
+                    </span>
+
+                    <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div>
+                            <div className="mt-3 text-center sm:mt-5">
+                                <DialogTitle
+                                    as="h3"
+                                    className="text-lg leading-6 font-medium text-gray-900"
+                                >
+                                    Confirm Logout
+                                </DialogTitle>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        Are you sure you want to logout?
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                            <button
+                                type="button"
+                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                                onClick={confirmLogout}
+                            >
+                                Logout
+                            </button>
+                            <button
+                                type="button"
+                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                onClick={closeModal}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Dialog>
         </div>
     );
 }

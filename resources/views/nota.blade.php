@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <td>Cashier</td>
-                <td class="text-right">{{ $pesanan->user->username }}</td>
+                <td class="text-right">{{ $pesanan->user->Username }}</td>
             </tr>
             <tr>
                 <td>Customer</td>

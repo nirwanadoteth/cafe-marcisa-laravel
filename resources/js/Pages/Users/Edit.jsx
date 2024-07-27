@@ -12,11 +12,11 @@ import SecondaryButton from "@/Components/SecondaryButton";
 export default function Edit({ auth, user }) {
     const { data, setData, put, processing, errors, recentlySuccessful } =
         useForm({
-            username: user.username,
+            Username: user.Username,
             current_password: "",
-            password: "",
+            Password: "",
             password_confirmation: "",
-            role: user.role,
+            Role: user.Role,
         });
 
     const submit = (e) => {
@@ -42,18 +42,18 @@ export default function Edit({ auth, user }) {
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <form onSubmit={submit} className="mt-6 space-y-6">
                                 <div>
-                                    <InputLabel htmlFor="username" value="Username" />
+                                    <InputLabel htmlFor="Username" value="Username" />
                                     <TextInput
-                                        id="username"
+                                        id="Username"
                                         type="text"
-                                        name="username"
-                                        value={data.username}
+                                        name="Username"
+                                        value={data.Username}
                                         onChange={(e) =>
-                                            setData("username", e.target.value)
+                                            setData("Username", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.username} />
+                                    <InputError message={errors.Username} />
                                 </div>
                                 <div>
                                     <InputLabel
@@ -75,16 +75,16 @@ export default function Edit({ auth, user }) {
                                 <div>
                                     <InputLabel htmlFor="Password" value="Password" />
                                     <TextInput
-                                        id="password"
+                                        id="Password"
                                         type="password"
-                                        name="password"
-                                        value={data.password}
+                                        name="Password"
+                                        value={data.Password}
                                         onChange={(e) =>
-                                            setData("password", e.target.value)
+                                            setData("Password", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.password} />
+                                    <InputError message={errors.Password} />
                                 </div>
                                 <div>
                                     <InputLabel
@@ -105,15 +105,15 @@ export default function Edit({ auth, user }) {
                                 </div>
                                 <div>
                                     <InputLabel
-                                        htmlFor="role"
+                                        htmlFor="Role"
                                         value="Role"
                                     />
                                     <SelectInput
-                                        id="role"
-                                        name="role"
-                                        value={data.role}
+                                        id="Role"
+                                        name="Role"
+                                        value={data.Role}
                                         onChange={(e) =>
-                                            setData("role", e.target.value)
+                                            setData("Role", e.target.value)
                                         }
                                         options={[
                                             {
@@ -131,7 +131,7 @@ export default function Edit({ auth, user }) {
                                         ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.role} />
+                                    <InputError message={errors.Role} />
                                 </div>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>

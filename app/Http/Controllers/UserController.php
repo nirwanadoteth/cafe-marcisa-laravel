@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'user' => User::orderBy('username')->get(),
+            'user' => User::orderBy('Username')->get(),
         ]);
     }
 
@@ -40,17 +40,17 @@ class UserController extends Controller
         $request->validate([
             // 'name' => 'required|string|max:255',
             // 'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'username' => 'required|string|max:255|unique:' . User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => [Rule::enum(Role::class)],
+            'Username' => 'required|string|max:255|unique:' . User::class,
+            'Password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'Role' => [Rule::enum(Role::class)],
         ]);
 
         User::create([
             // 'name' => $request->name,
             // 'email' => $request->email,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'Username' => $request->Username,
+            'Password' => Hash::make($request->Password),
+            'Role' => $request->Role,
         ]);
 
         return redirect(route('user.index'));
@@ -79,41 +79,41 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // Check current password if provided
-        if ($request->current_password && !Hash::check($request->current_password, $user->password)) {
+        // Check current Password if provided
+        if ($request->current_password && !Hash::check($request->current_password, $user->Password)) {
             throw ValidationException::withMessages([
-                'current_password' => ['The provided password does not match your current password.'],
+                'current_password' => ['The provided Password does not match your current Password.'],
             ]);
         }
 
-        // check if new password is same as old password
-        if ($request->password && Hash::check($request->password, $user->password)) {
+        // check if new Password is same as old Password
+        if ($request->Password && Hash::check($request->Password, $user->Password)) {
             throw ValidationException::withMessages([
-                'password' => ['The new password must be different from the current password.'],
+                'Password' => ['The new Password must be different from the current Password.'],
             ]);
         }
 
         // Validate input
         $validated = $request->validate([
-            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            'role' => [Rule::enum(Role::class)],
+            'Username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'Password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'Role' => [Rule::enum(Role::class)],
         ]);
 
         // Update user details
         $user->update([
-            'username' => $validated['username'],
-            'role' => $validated['role'],
+            'Username' => $validated['Username'],
+            'Role' => $validated['Role'],
         ]);
 
-        // Update password only if provided
-        if ($validated['password']) {
+        // Update Password only if provided
+        if ($validated['Password']) {
             $user->update([
-                'password' => Hash::make($validated['password']),
+                'Password' => Hash::make($validated['Password']),
             ]);
 
-            // Log the user out if they updated their own password
-            if ($user->id === auth()->user()->id) {
+            // Log the user out if they updated their own Password
+            if ($user->Id_User === auth()->user()->getAuthIdentifier()) {
                 auth()->logout();
 
                 $request->session()->invalidate();

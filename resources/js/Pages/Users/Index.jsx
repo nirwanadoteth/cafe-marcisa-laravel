@@ -12,10 +12,10 @@ import { Dialog, DialogBackdrop, DialogTitle } from "@headlessui/react";
 
 export default function Index({ auth, user }) {
     const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
-        username: "",
-        password: "",
+        Username: "",
+        Password: "",
         password_confirmation: "",
-        role: "Owner",
+        Role: "Owner",
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function Index({ auth, user }) {
 
     useEffect(() => {
         return () => {
-            reset("password", "password_confirmation");
+            reset("Password", "password_confirmation");
         };
     }, []);
 
@@ -67,50 +67,50 @@ export default function Index({ auth, user }) {
                             <form onSubmit={submit}>
                                 <div>
                                     <InputLabel
-                                        htmlFor="username"
+                                        htmlFor="Username"
                                         value="Username"
                                     />
 
                                     <TextInput
-                                        id="username"
-                                        name="username"
-                                        value={data.username}
+                                        id="Username"
+                                        name="Username"
+                                        value={data.Username}
                                         className="mt-1 block w-full"
-                                        autoComplete="username"
+                                        autoComplete="Username"
                                         isFocused={true}
                                         onChange={(e) =>
-                                            setData("username", e.target.value)
+                                            setData("Username", e.target.value)
                                         }
                                         required
                                     />
 
                                     <InputError
-                                        message={errors.username}
+                                        message={errors.Username}
                                         className="mt-2"
                                     />
                                 </div>
 
                                 <div className="mt-4">
                                     <InputLabel
-                                        htmlFor="password"
+                                        htmlFor="Password"
                                         value="Password"
                                     />
 
                                     <TextInput
-                                        id="password"
+                                        id="Password"
                                         type="password"
-                                        name="password"
-                                        value={data.password}
+                                        name="Password"
+                                        value={data.Password}
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
                                         onChange={(e) =>
-                                            setData("password", e.target.value)
+                                            setData("Password", e.target.value)
                                         }
                                         required
                                     />
 
                                     <InputError
-                                        message={errors.password}
+                                        message={errors.Password}
                                         className="mt-2"
                                     />
                                 </div>
@@ -144,14 +144,14 @@ export default function Index({ auth, user }) {
                                 </div>
 
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="role" value="Role" />
+                                    <InputLabel htmlFor="Role" value="Role" />
 
                                     <SelectInput
-                                        id="role"
-                                        name="role"
-                                        value={data.role}
+                                        id="Role"
+                                        name="Role"
+                                        value={data.Role}
                                         onChange={(e) =>
-                                            setData("role", e.target.value)
+                                            setData("Role", e.target.value)
                                         }
                                         options={[
                                             {
@@ -171,7 +171,7 @@ export default function Index({ auth, user }) {
                                     />
 
                                     <InputError
-                                        message={errors.role}
+                                        message={errors.Role}
                                         className="mt-2"
                                     />
                                 </div>
@@ -202,10 +202,10 @@ export default function Index({ auth, user }) {
                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
                                     >
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {user.username}
+                                            {user.Username}
                                         </dt>
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {user.role}
+                                            {user.Role}
                                         </dt>
                                         <dt className="text-sm text-gray-900">
                                             <Link

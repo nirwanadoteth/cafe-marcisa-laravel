@@ -99,7 +99,7 @@ export default function Index({ auth, produk, kategori }) {
                                 </div>
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
-                                        Create
+                                        Add Product
                                     </PrimaryButton>
                                 </div>
                             </form>
