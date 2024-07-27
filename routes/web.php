@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotaController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Foundation\Application;
+use App\Models\Kategori;
+use App\Models\Pesanan;
+use App\Models\Produk;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,8 +20,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
-        'totalCategories' => Category::where('status', 'Active')->count(),   
-        'totalProducts' => Product::where('status', 'Active')->count(),
+        'totalCategories' => Kategori::where('Status', 'Active')->count(),   
+        'totalProducts' => Produk::where('Status', 'Active')->count(),
+        'favProduct' => Produk::withCount('rincian_pesanan')->orderBy('Nama')->first(),
+        'orderToday' => Pesanan::whereDate('Tanggal', now('Asia/Jakarta'))->count(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -31,40 +34,42 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('categories', CategoryController::class);
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::patch('/categories/{category}', [CategoryController::class, 'toggle'])->name('categories.toggle');
+    Route::resource('kategori', KategoriController::class);
+    Route::get('/kategori/{kategori}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::patch('/kategori/{kategori}', [KategoriController::class, 'toggle'])->name('kategori.toggle');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('products', ProductController::class);
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::patch('/products/{product}', [ProductController::class, 'toggle'])->name('products.toggle');
+    Route::resource('produk', ProdukController::class);
+    Route::get('/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
+    Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.update');
+    Route::patch('/produk/{produk}', [ProdukController::class, 'toggle'])->name('produk.toggle');
+});
+Route::middleware('auth')->group(function () {
+    Route::resource('user', UserController::class);
+    Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('users', UserController::class);
-    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::resource('pesanan', PesananController::class)->middleware('auth');
+    Route::get('/pesanan/{pesanan}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
+    Route::put('/pesanan/{pesanan}', [PesananController::class, 'update'])->name('pesanan.update');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('orders', OrderController::class)->middleware('auth');
-    Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::resource('nota', NotaController::class);
+    Route::get('/nota/{pesanan}/process', [NotaController::class, 'process'])->name('nota.process');
+    Route::get('/nota/{pesanan}/pdf', [NotaController::class, 'generatePdf'])->name('nota.pdf');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('payments', OrderController::class);
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
-    Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
-    Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
-    Route::get('/payments/{order}/process', [PaymentController::class, 'process'])->name('payments.process');
-    Route::put('/payments/{payment}', [PaymentController::class, 'update'])->name('payments.update');
-    Route::delete('/payments/{payment}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan/data', [LaporanController::class, 'fetchData'])->name('laporan.fetchData');
+    Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    Route::get('/laporan/pdf', [LaporanController::class, 'generatePdf'])->name('laporan.pdf');
 });
 
 require __DIR__.'/auth.php';

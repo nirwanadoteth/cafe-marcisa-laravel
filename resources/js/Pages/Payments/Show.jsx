@@ -8,7 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { Transition } from "@headlessui/react";
 
-export default function Process({ auth, order }) {
+export default function Show({ auth, order }) {
     const { data, setData, post, processing, errors, recentlySuccessful, setError, clearErrors } =
         useForm({
             order_id: order.id,
@@ -118,7 +118,7 @@ export default function Process({ auth, order }) {
                                 >
                                     <div>
                                         <InputLabel
-                                            forInput="pay"
+                                            htmlFor="pay"
                                             value="Received"
                                         />
                                         <TextInput

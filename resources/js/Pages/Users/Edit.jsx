@@ -22,7 +22,7 @@ export default function Edit({ auth, user }) {
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("users.update", user.id));
+        put(route("user.update", user.id));
     };
 
     return (
@@ -150,7 +150,7 @@ export default function Edit({ auth, user }) {
                                         </p>
                                     </Transition>
 
-                                    <Link href={route("users.index")}>
+                                    <Link href={route("user.index")}>
                                         <SecondaryButton>
                                             Cancel
                                         </SecondaryButton>

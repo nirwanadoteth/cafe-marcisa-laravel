@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
-import SelectInput from "@/Components/SelectInput";
+import { format } from "date-fns";
 
-export default function Index({ auth, orders }) {
+export default function Index({ auth, pesanan }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -24,7 +21,7 @@ export default function Index({ auth, orders }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white text-right">
-                            <Link href={route("orders.create")}>
+                            <Link href={route("pesanan.create")}>
                                 <PrimaryButton>Add Order</PrimaryButton>
                             </Link>
                         </div>
@@ -34,49 +31,59 @@ export default function Index({ auth, orders }) {
                             </h3>
                             <dl className="border-t border-gray-200">
                                 <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
+                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-3">
                                         Customer Name
                                     </dt>
-                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
+                                    {/* <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
                                         Total Price
-                                    </dt>
-                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-1">
-                                        Status
+                                    </dt> */}
+                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
+                                        Order Date
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-1">
                                         Actions
                                     </dt>
                                 </div>
-                                {orders.map((order) => (
+                                {pesanan.length > 0 ? (
+                                pesanan.map((pesanan) => (
                                     <div
-                                        key={order.id}
+                                        key={pesanan.Id_Pesanan}
                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
                                     >
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {order.customer_name}
+                                        <dt className="text-sm text-gray-900 sm:col-span-3">
+                                            {pesanan.pembeli.Nama}
                                         </dt>
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            Rp. {parseInt(order.total_price).toLocaleString()}
+                                            {format(
+                                                new Date(pesanan.Tanggal),
+                                                "dd MMM yyyy HH:mm:ss"
+                                            )}
                                         </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-1">
+                                        {/* <dt className="text-sm text-gray-900 sm:col-span-1">
                                             {order.status}
-                                        </dt>
+                                        </dt> */}
                                         <dt className="text-sm text-gray-900 sm:col-span-1">
                                             <Link
                                                 href={route(
-                                                    "orders.edit",
-                                                    order.id
+                                                    "pesanan.edit",
+                                                    pesanan.Id_Pesanan
                                                 )}
                                                 className="text-indigo-600 hover:text-indigo-900 mr-2"
                                             >
-                                                <SecondaryButton disabled={order.status === "Completed"}>
+                                                <SecondaryButton
+                                                    disabled={
+                                                        pesanan.nota
+                                                            ? true
+                                                            : false
+                                                    }
+                                                >
                                                     Edit
                                                 </SecondaryButton>
                                             </Link>
                                             <Link
                                                 href={route(
-                                                    "orders.show",
-                                                    order.id
+                                                    "pesanan.show",
+                                                    pesanan.Id_Pesanan
                                                 )}
                                                 className="text-indigo-600 hover:text-indigo-900"
                                             >
@@ -86,7 +93,14 @@ export default function Index({ auth, orders }) {
                                             </Link>
                                         </dt>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <div className="bg-white px-4 py-5 sm:px-6">
+                                    <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                        No orders found.
+                                    </dt>
+                                </div>
+                            )}
                             </dl>
                         </div>
                     </div>

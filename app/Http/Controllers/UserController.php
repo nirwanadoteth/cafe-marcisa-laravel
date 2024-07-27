@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'users' => User::all(),
+            'user' => User::orderBy('username')->get(),
         ]);
     }
 
@@ -53,7 +53,7 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect(route('users.index'));
+        return redirect(route('user.index'));
     }
 
     /**
@@ -123,7 +123,7 @@ class UserController extends Controller
             }
         }
 
-        return redirect(route('users.index'));
+        return redirect(route('user.index'));
     }
 
     /**
@@ -133,6 +133,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect(route('users.index'));
+        return redirect(route('user.index'));
     }
 }

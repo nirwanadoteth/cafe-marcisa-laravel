@@ -1,40 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
-import SelectInput from "@/Components/SelectInput";
 import { Transition } from "@headlessui/react";
 
-export default function Process({ auth, order }) {
-    const { data, setData, post, processing, errors, recentlySuccessful, setError, clearErrors } =
-        useForm({
-            order_id: order.id,
-            pay: "",
-        });
+export default function Process({ auth, pesanan }) {
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        // errors,
+        recentlySuccessful,
+        setError,
+        clearErrors,
+    } = useForm({
+        Id_Pesanan: pesanan.Id_Pesanan,
+        pay: "",
+    });
 
-    const calculateSubTotal = () => {
-        const tax = order.total_price * 0.1;
-        const discount = 0; // Assuming no discount for simplicity
-        const subtotal = parseFloat(order.total_price) + tax - discount;
-        return parseInt(subtotal);
-    };
+    const { errors } = usePage().props;
 
-    const subTotal = calculateSubTotal();
+    const [subTotal, setSubTotal] = useState(0);
+    const [tax, setTax] = useState(0);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        const calculateSubTotal = () => {
+            let subTotal = 0;
+            pesanan.rincian_pesanan.forEach((rincian) => {
+                subTotal += rincian.Jumlah * rincian.produk.Harga;
+            });
+            return subTotal;
+        };
+
+        const subTotal = calculateSubTotal();
+        const tax = subTotal * 0.1;
+        const total = subTotal + tax;
+
+        setSubTotal(subTotal);
+        setTax(tax);
+        setTotal(total);
+    }, [pesanan]);
+
+    // const handlePdfDownload = () => {
+    //     window.open(route("nota.pdf", pesanan.Id_Pesanan), "_blank");
+    // };
 
     const submit = (e) => {
         e.preventDefault();
         clearErrors();
 
-        if (parseFloat(data.pay) < subTotal) {
+        if (parseFloat(data.pay) < total) {
             setError("pay", "Payment amount is less than the total amount.");
             return;
         }
 
-        post(route("payments.store", data.order_id));
+        post(route("nota.store", pesanan.Id_Pesanan), {
+            onSuccess: () => window.open(route("nota.pdf", pesanan.Id_Pesanan), "_blank"),
+        });
     };
 
     return (
@@ -54,72 +82,70 @@ export default function Process({ auth, order }) {
                         <div className="p-6 bg-white">
                             <dl>
                                 <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-semibold text-gray-900">
-                                        Customer Name : {order.customer_name}
+                                    <dt className="text-sm font-semibold text-gray-900 sm:col-span-1">
+                                        Customer Name :{" "}
+                                        <span className="font-normal">
+                                            {pesanan.pembeli.Nama}
+                                        </span>
                                     </dt>
+                                    {/* <dt className="text-sm font-semibold text-gray-900 sm:col-span-1 text-right">
+                                        <SecondaryButton onClick={handlePdfDownload}>
+                                            Download PDF
+                                        </SecondaryButton>
+                                    </dt> */}
                                 </div>
-                                {order.products.map((product) => (
+                                {pesanan.rincian_pesanan.map((rincian) => (
                                     <div
-                                        key={product.id}
+                                        key={rincian.Id_Produk}
                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 items-center"
                                     >
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {product.name}
+                                            {rincian.produk.Nama}
                                         </dt>
                                         <dt className="text-sm text-gray-900 sm:col-span-1">
-                                            {product.pivot.quantity} x{" "}
+                                            {rincian.Jumlah} x{" "}
                                             {parseInt(
-                                                product.price
+                                                rincian.produk.Harga
                                             ).toLocaleString()}
                                         </dt>
                                         <dt className="text-sm text-gray-900 text-right sm:col-span-1">
                                             {(
-                                                product.pivot.quantity *
-                                                product.price
+                                                rincian.Jumlah *
+                                                rincian.produk.Harga
                                             ).toLocaleString()}
                                         </dt>
                                     </div>
                                 ))}
                                 <div className="bg-white border-t px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-semibold text-gray-900">
-                                        Total Price :
+                                        Subtotal
                                     </dt>
-                                    <dt className="text-sm font-semibold text-gray-900 text-right">
-                                        {parseInt(
-                                            order.total_price
-                                        ).toLocaleString()}
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900">
-                                        Tax (10%) :
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900 text-right">
-                                        {parseInt(
-                                            order.total_price * 0.1
-                                        ).toLocaleString()}
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900">
-                                        Discount :
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900 text-right">
-                                        0
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900">
-                                        Subtotal :
-                                    </dt>
-                                    <dt className="text-sm font-semibold text-gray-900 text-right">
+                                    <dt className="text-sm text-gray-900 text-right">
                                         {parseInt(subTotal).toLocaleString()}
+                                    </dt>
+                                    <dt className="text-sm font-semibold text-gray-900">
+                                        Tax (10%)
+                                    </dt>
+                                    <dt className="text-sm text-gray-900 text-right">
+                                        {parseInt(tax).toLocaleString()}
+                                    </dt>
+                                    <dt className="text-sm font-semibold text-gray-900">
+                                        Total
+                                    </dt>
+                                    <dt className="text-sm text-gray-900 text-right">
+                                        {parseInt(total).toLocaleString()}
                                     </dt>
                                 </div>
                             </dl>
-                            <div className="mt-8">
+                            <div className="px-6">
                                 <form
                                     onSubmit={submit}
                                     className="mt-6 space-y-6"
                                 >
                                     <div>
                                         <InputLabel
-                                            forInput="pay"
-                                            value="Received"
+                                            htmlFor="pay"
+                                            value="Cash"
                                         />
                                         <TextInput
                                             id="pay"
@@ -135,7 +161,7 @@ export default function Process({ auth, order }) {
                                     </div>
                                     <div className="flex items-center justify-end gap-4">
                                         <PrimaryButton disabled={processing}>
-                                            Save
+                                            Process
                                         </PrimaryButton>
 
                                         <Transition
@@ -150,7 +176,7 @@ export default function Process({ auth, order }) {
                                             </p>
                                         </Transition>
 
-                                        <Link href={route("payments.index")}>
+                                        <Link href={route("nota.index")}>
                                             <SecondaryButton>
                                                 Cancel
                                             </SecondaryButton>

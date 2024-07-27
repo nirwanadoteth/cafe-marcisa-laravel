@@ -4,17 +4,18 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
+import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function New({ auth, categories, products }) {
+export default function New({ auth, kategori, produk }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        customer_name: "",
-        products: [],
+        Nama: "",
+        produk: [],
     });
 
     const [quantities, setQuantities] = useState(
-        products.reduce((acc, product) => {
-            acc[product.id] = 0;
+        produk.reduce((acc, product) => {
+            acc[product.Id_Produk] = 0;
             return acc;
         }, {})
     );
@@ -23,11 +24,11 @@ export default function New({ auth, categories, products }) {
         const selectedProducts = Object.keys(quantities)
             .filter((productId) => quantities[productId] > 0)
             .map((productId) => ({
-                product_id: parseInt(productId), // Ensure product ID is an integer
-                quantity: quantities[productId],
+                Id_Produk: parseInt(productId), // Ensure product ID is an integer
+                Jumlah: quantities[productId],
             }));
 
-        setData("products", selectedProducts);
+        setData("produk", selectedProducts);
     }, [quantities, setData]);
 
     const handleQuantityChange = (productId, change) => {
@@ -46,21 +47,21 @@ export default function New({ auth, categories, products }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("orders.store"), {
+        post(route("pesanan.store"), {
             onSuccess: () => reset(),
         });
     };
 
-    const filteredProducts = products.reduce((acc, product) => {
-        const category = categories.find(
-            (category) => category.id === product.category_id
+    const filteredProducts = produk.reduce((acc, product) => {
+        const category = kategori.find(
+            (category) => category.Id_Kategori === product.Id_Kategori
         );
 
-        if (!acc[category.name]) {
-            acc[category.name] = [];
+        if (!acc[category.Nama]) {
+            acc[category.Nama] = [];
         }
 
-        acc[category.name].push(product);
+        acc[category.Nama].push(product);
         return acc;
     }, {});
 
@@ -82,51 +83,46 @@ export default function New({ auth, categories, products }) {
                             <form onSubmit={submit}>
                                 <div>
                                     <InputLabel
-                                        htmlFor="customer_name"
+                                        htmlFor="Nama"
                                         value="Customer Name"
                                     />
                                     <TextInput
-                                        id="customer_name"
+                                        id="Nama"
                                         type="text"
-                                        name="customer_name"
-                                        value={data.customer_name}
+                                        name="Nama"
+                                        value={data.Nama}
                                         onChange={(e) =>
-                                            setData(
-                                                "customer_name",
-                                                e.target.value
-                                            )
+                                            setData("Nama", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError
-                                        message={errors.customer_name}
-                                    />
+                                    <InputError message={errors.Nama} />
                                 </div>
-                                <dl className="mt-4 border-t border-gray-200">
+                                <dl className="mt-4 border-t border-b border-gray-200">
                                     {Object.entries(filteredProducts).map(
-                                        ([category, products]) => (
+                                        ([category, produk]) => (
                                             <div key={category}>
                                                 <div className="bg-gray-100 px-4 py-5 sm:grid sm:gap-4 sm:px-6">
                                                     <dt className="text-sm font-semibold text-gray-900">
                                                         {category}
                                                     </dt>
                                                 </div>
-                                                {products.map((product) => (
+                                                {produk.map((product) => (
                                                     <div
-                                                        key={product.id}
+                                                        key={product.Id_Produk}
                                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
                                                     >
                                                         <dt className="text-sm text-gray-900 sm:col-span-4 ml-4">
-                                                            {product.name}
+                                                            {product.Nama}
                                                         </dt>
                                                         <dt className="text-sm text-gray-900 sm:col-span-1">
-                                                            <div className="flex items-center">
+                                                            <div className="flex items-center justify-end mr-4">
                                                                 <button
                                                                     type="button"
                                                                     className="text-gray-500 focus:outline-none focus:text-gray-600"
                                                                     onClick={() =>
                                                                         handleQuantityChange(
-                                                                            product.id,
+                                                                            product.Id_Produk,
                                                                             -1
                                                                         )
                                                                     }
@@ -141,7 +137,7 @@ export default function New({ auth, categories, products }) {
                                                                 <span className="mx-2 text-gray-700">
                                                                     {quantities[
                                                                         product
-                                                                            .id
+                                                                            .Id_Produk
                                                                     ] || 0}
                                                                 </span>
                                                                 <button
@@ -149,7 +145,7 @@ export default function New({ auth, categories, products }) {
                                                                     className="text-gray-500 focus:outline-none focus:text-gray-600"
                                                                     onClick={() =>
                                                                         handleQuantityChange(
-                                                                            product.id,
+                                                                            product.Id_Produk,
                                                                             1
                                                                         )
                                                                     }
@@ -169,10 +165,15 @@ export default function New({ auth, categories, products }) {
                                         )
                                     )}
                                 </dl>
-                                <div className="mt-4 text-center">
+                                <div className="flex items-center justify-end py-4 gap-4">
                                     <PrimaryButton disabled={processing}>
                                         Create Order
                                     </PrimaryButton>
+                                    <Link href={route("pesanan.index")}>
+                                        <SecondaryButton>
+                                            Cancel
+                                        </SecondaryButton>
+                                    </Link>
                                 </div>
                             </form>
                         </div>

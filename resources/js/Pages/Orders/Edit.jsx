@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function Edit({
-    auth,
-    categories,
-    products,
-    order,
-    orderProducts,
-}) {
+export default function Edit({ auth, pesanan, kategori, produk }) {
     const { data, setData, put, processing, errors, recentlySuccessful } =
         useForm({
-            customer_name: order.customer_name,
-            products: orderProducts.map((product) => ({
-                product_id: product.product_id,
-                quantity: product.quantity,
+            produk: pesanan.rincian_pesanan.map((produk) => ({
+                Id_Produk: produk.Id_Produk,
+                Jumlah: produk.Jumlah,
             })),
         });
 
     const [quantities, setQuantities] = useState(
-        products.reduce((acc, product) => {
-            const orderedProduct = orderProducts.find(
-                (op) => op.product_id === product.id
+        produk.reduce((acc, product) => {
+            const orderedProduct = pesanan.rincian_pesanan.find(
+                (op) => op.Id_Produk === product.Id_Produk
             );
-            acc[product.id] = orderedProduct ? orderedProduct.quantity : 0;
+            acc[product.Id_Produk] = orderedProduct ? orderedProduct.Jumlah : 0;
             return acc;
         }, {})
     );
@@ -38,19 +28,25 @@ export default function Edit({
         const selectedProducts = Object.keys(quantities)
             .filter((productId) => quantities[productId] > 0)
             .map((productId) => ({
-                product_id: parseInt(productId), // Ensure product ID is an integer
-                quantity: quantities[productId],
+                Id_Produk: parseInt(productId), // Ensure product ID is an integer
+                Jumlah: quantities[productId],
             }));
 
-        setData("products", selectedProducts);
+        setData("produk", selectedProducts);
     }, [quantities, setData]);
 
     const handleQuantityChange = (productId, change) => {
         setQuantities((prevQuantities) => {
-            const newQuantity = Math.max(
-                (prevQuantities[productId] || 0) + change,
-                0
-            );
+            const currentQuantity = prevQuantities[productId] || 0;
+            const newQuantity = Math.max(currentQuantity + change, 0);
+
+            if (newQuantity < pesanan.rincian_pesanan.find((op) => op.Id_Produk === productId)?.Jumlah) {
+                return {
+                    ...prevQuantities,
+                    [productId]: pesanan.rincian_pesanan.find((op) => op.Id_Produk === productId)?.Jumlah,
+                };
+            }
+
             return {
                 ...prevQuantities,
                 [productId]: newQuantity,
@@ -61,19 +57,19 @@ export default function Edit({
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("orders.update", order.id));
+        put(route("pesanan.update", pesanan.Id_Pesanan));
     };
 
-    const filteredProducts = products.reduce((acc, product) => {
-        const category = categories.find(
-            (category) => category.id === product.category_id
+    const filteredProducts = produk.reduce((acc, product) => {
+        const category = kategori.find(
+            (category) => category.Id_Kategori === product.Id_Kategori
         );
 
-        if (!acc[category.name]) {
-            acc[category.name] = [];
+        if (!acc[category.Nama]) {
+            acc[category.Nama] = [];
         }
 
-        acc[category.name].push(product);
+        acc[category.Nama].push(product);
         return acc;
     }, {});
 
@@ -93,37 +89,39 @@ export default function Edit({
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <form onSubmit={submit} className="mt-6 space-y-6">
-                                <dl className="mt-4 border-t border-gray-200">
+                                <dl className="mt-4 border-t border-b border-gray-200">
                                     <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-semibold text-gray-900">
                                             Customer Name :{" "}
-                                            {data.customer_name}
+                                            <span className="text-sm font-normal">
+                                                {pesanan.pembeli.Nama}
+                                            </span>
                                         </dt>
                                     </div>
                                     {Object.entries(filteredProducts).map(
-                                        ([category, products]) => (
+                                        ([category, produk]) => (
                                             <div key={category}>
                                                 <div className="bg-gray-100 px-4 py-5 sm:grid sm:gap-4 sm:px-6">
                                                     <dt className="text-sm font-semibold text-gray-900">
                                                         {category}
                                                     </dt>
                                                 </div>
-                                                {products.map((product) => (
+                                                {produk.map((product) => (
                                                     <div
-                                                        key={product.id}
+                                                        key={product.Id_Produk}
                                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
                                                     >
                                                         <dt className="text-sm text-gray-900 sm:col-span-4 ml-4">
-                                                            {product.name}
+                                                            {product.Nama}
                                                         </dt>
                                                         <dt className="text-sm text-gray-900 sm:col-span-1">
-                                                            <div className="flex items-center">
+                                                            <div className="flex items-center justify-center mr-4">
                                                                 <button
                                                                     type="button"
                                                                     className="text-gray-500 focus:outline-none focus:text-gray-600"
                                                                     onClick={() =>
                                                                         handleQuantityChange(
-                                                                            product.id,
+                                                                            product.Id_Produk,
                                                                             -1
                                                                         )
                                                                     }
@@ -136,16 +134,20 @@ export default function Edit({
                                                                     </span>
                                                                 </button>
                                                                 <span className="mx-2 text-gray-700">
-                                                                    {orderProducts.product_id ===
-                                                                    product.id
-                                                                        ? orderProducts.quantity
+                                                                    {pesanan
+                                                                        .rincian_pesanan
+                                                                        .Id_Produk ===
+                                                                    product.Id_Produk
+                                                                        ? pesanan
+                                                                              .rincian_pesanan
+                                                                              .Jumlah
                                                                         : quantities[
                                                                               product
-                                                                                  .id
+                                                                                  .Id_Produk
                                                                           ]
                                                                         ? quantities[
                                                                               product
-                                                                                  .id
+                                                                                  .Id_Produk
                                                                           ]
                                                                         : 0}
                                                                 </span>
@@ -154,7 +156,7 @@ export default function Edit({
                                                                     className="text-gray-500 focus:outline-none focus:text-gray-600"
                                                                     onClick={() =>
                                                                         handleQuantityChange(
-                                                                            product.id,
+                                                                            product.Id_Produk,
                                                                             1
                                                                         )
                                                                     }
@@ -191,7 +193,7 @@ export default function Edit({
                                         </p>
                                     </Transition>
 
-                                    <Link href={route("orders.index")}>
+                                    <Link href={route("pesanan.index")}>
                                         <SecondaryButton>
                                             Cancel
                                         </SecondaryButton>

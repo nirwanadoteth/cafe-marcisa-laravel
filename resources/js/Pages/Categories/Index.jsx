@@ -7,25 +7,25 @@ import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function Index({ auth, categories }) {
+export default function Index({ auth, kategori }) {
     const { data, setData, post, patch, processing, errors, reset } = useForm({
-        name: "",
-        status: "",
+        Nama: "",
+        Status: "",
     });
 
     const [search, setSearch] = useState("");
 
     const submit = (e) => {
         e.preventDefault();
-        post(route("categories.store"), { onSuccess: () => reset() });
+        post(route("kategori.store"), { onSuccess: () => reset() });
     };
 
-    const toggleStatus = (categoryId) => {
-        patch(route("categories.update", categoryId));
+    const toggleStatus = (idKategori) => {
+        patch(route("kategori.update", idKategori));
     };
 
-    const filteredCategories = categories.filter((category) =>
-        category.name.toLowerCase().includes(search.toLowerCase())
+    const filteredKategori = kategori.filter((kategori) =>
+        kategori.Nama.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -45,18 +45,18 @@ export default function Index({ auth, categories }) {
                         <div className="p-6 bg-white">
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="name" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Name" />
                                     <TextInput
-                                        id="name"
+                                        id="Nama"
                                         type="text"
-                                        name="name"
-                                        value={data.name}
+                                        name="Nama"
+                                        value={data.Nama}
                                         onChange={(e) =>
-                                            setData("name", e.target.value)
+                                            setData("Nama", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.name} />
+                                    <InputError message={errors.Nama} />
                                 </div>
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
@@ -89,55 +89,42 @@ export default function Index({ auth, categories }) {
                                         Actions
                                     </dt>
                                 </div>
-                                {filteredCategories.map((category) => (
-                                    <div
-                                        key={category.id}
-                                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
-                                    >
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {category.name}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {category.status}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            <SecondaryButton
-                                                onClick={() =>
-                                                    toggleStatus(category.id)
-                                                }
-                                                disabled={processing}
-                                            >
-                                                {category.status ===
-                                                "Active" ? (
-                                                    <i
-                                                        className="fas fa-toggle-on"
-                                                        style={{
-                                                            lineHeight: 1.3,
-                                                        }}
-                                                    ></i>
-                                                ) : (
-                                                    <i
-                                                        className="fas fa-toggle-off"
-                                                        style={{
-                                                            lineHeight: 1.3,
-                                                        }}
-                                                    ></i>
-                                                )}
-                                            </SecondaryButton>
-                                            <Link
-                                                href={route(
-                                                    "categories.edit",
-                                                    category.id
-                                                )}
-                                                className="ml-2"
-                                            >
-                                                <SecondaryButton>
-                                                    Edit
-                                                </SecondaryButton>
-                                            </Link>
+                                {filteredKategori.length > 0 ? (
+                                    filteredKategori.map((kategori) => (
+                                        <div
+                                            key={kategori.Id_Kategori}
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
+                                        >
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {kategori.Nama}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {kategori.Status}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                <Link
+                                                    href={route(
+                                                        "kategori.edit",
+                                                        {
+                                                            kategori:
+                                                                kategori.Id_Kategori,
+                                                        }
+                                                    )}
+                                                >
+                                                    <SecondaryButton>
+                                                        Edit
+                                                    </SecondaryButton>
+                                                </Link>
+                                            </dt>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="bg-white px-4 py-5 sm:px-6">
+                                        <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                            No categories found.
                                         </dt>
                                     </div>
-                                ))}
+                                )}
                             </dl>
                         </div>
                     </div>

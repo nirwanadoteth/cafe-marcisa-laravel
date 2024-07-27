@@ -11,6 +11,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'user';
+    protected $primaryKey = 'Id_User';
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -43,5 +47,10 @@ class User extends Authenticatable
             // 'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'Id_User', 'Id_User');
     }
 }

@@ -8,14 +8,18 @@ import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import DangerButton from "@/Components/DangerButton";
+import { Dialog, DialogBackdrop, DialogTitle } from "@headlessui/react";
 
-export default function Index({ auth, users }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+export default function Index({ auth, user }) {
+    const { data, setData, post, delete: destroy, processing, errors, reset } = useForm({
         username: "",
         password: "",
         password_confirmation: "",
-        role: "Admin",
+        role: "Owner",
     });
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userIdToDelete, setUserIdToDelete] = useState(null);
 
     useEffect(() => {
         return () => {
@@ -26,7 +30,23 @@ export default function Index({ auth, users }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("users.store"), { onSuccess: () => reset() });
+        post(route("user.store"), { onSuccess: () => reset() });
+    };
+
+    const openModal = (userId) => {
+        setUserIdToDelete(userId);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setUserIdToDelete(null);
+    };
+
+    const confirmDelete = () => {
+        destroy(route("user.destroy", userIdToDelete), {
+            onSuccess: () => closeModal()
+        });
     };
 
     return (
@@ -145,7 +165,7 @@ export default function Index({ auth, users }) {
                                             {
                                                 value: "MKP",
                                                 label: "MKP",
-                                            }
+                                            },
                                         ]}
                                         className="mt-1 block w-full"
                                     />
@@ -176,9 +196,9 @@ export default function Index({ auth, users }) {
                                         Actions
                                     </dt>
                                 </div>
-                                {users.map((user) => (
+                                {user.map((user) => (
                                     <div
-                                        key={user.id}
+                                        key={user.Id_User}
                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
                                     >
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
@@ -190,8 +210,8 @@ export default function Index({ auth, users }) {
                                         <dt className="text-sm text-gray-900">
                                             <Link
                                                 href={route(
-                                                    "users.edit",
-                                                    user.id
+                                                    "user.edit",
+                                                    user.Id_User
                                                 )}
                                             >
                                                 <SecondaryButton>
@@ -199,18 +219,14 @@ export default function Index({ auth, users }) {
                                                 </SecondaryButton>
                                             </Link>
                                             {/* delete button */}
-                                            <Link
-                                                href={route(
-                                                    "users.destroy",
-                                                    user.id
-                                                )}
-                                                method="delete"
+                                            <DangerButton
+                                                onClick={() =>
+                                                    openModal(user.Id_User)
+                                                }
                                                 className="ml-2"
                                             >
-                                                <DangerButton>
-                                                    Delete
-                                                </DangerButton>
-                                            </Link>
+                                                Delete
+                                            </DangerButton>
                                         </dt>
                                     </div>
                                 ))}
@@ -219,6 +235,58 @@ export default function Index({ auth, users }) {
                     </div>
                 </div>
             </div>
+
+            <Dialog
+                open={isModalOpen}
+                onClose={closeModal}
+                className="fixed z-10 inset-0 overflow-y-auto"
+            >
+                <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                    <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+
+                    <span
+                        className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                        aria-hidden="true"
+                    >
+                        &#8203;
+                    </span>
+
+                    <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div>
+                            <div className="mt-3 text-center sm:mt-5">
+                                <DialogTitle
+                                    as="h3"
+                                    className="text-lg leading-6 font-medium text-gray-900"
+                                >
+                                    Confirm Deletion
+                                </DialogTitle>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        Are you sure you want to delete this
+                                        user? This action cannot be undone.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                            <button
+                                type="button"
+                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
+                                onClick={confirmDelete}
+                            >
+                                Delete
+                            </button>
+                            <button
+                                type="button"
+                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                onClick={closeModal}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Dialog>
         </AuthenticatedLayout>
     );
 }

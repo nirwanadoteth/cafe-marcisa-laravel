@@ -8,27 +8,26 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import SelectInput from "@/Components/SelectInput";
 
-export default function Index({ auth, products, categories }) {
+export default function Index({ auth, produk, kategori }) {
     const { data, setData, post, patch, processing, errors, reset } = useForm({
-        category_id: categories[0].id,
-        name: "",
-        price: "",
-        status: "",
+        Id_Kategori: kategori.length > 0 ? kategori[0].Id_Kategori : "",
+        Nama: "",
+        Harga: "",
+        Status: "",
     });
 
     const [search, setSearch] = useState("");
-
     const submit = (e) => {
         e.preventDefault();
-        post(route("products.store"), { onSuccess: () => reset() });
+        post(route("produk.store"), { onSuccess: () => reset() });
     };
 
-    const toggleStatus = (productId) => {
-        patch(route("products.update", productId));
+    const toggleStatus = (idProduk) => {
+        patch(route("produk.update", idProduk));
     };
 
-    const filteredProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
+    const filteredProducts = produk.filter((produk) =>
+        produk.Nama.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -48,55 +47,55 @@ export default function Index({ auth, products, categories }) {
                         <div className="p-6 bg-white">
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="name" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Name" />
                                     <TextInput
-                                        id="name"
+                                        id="Nama"
                                         type="text"
-                                        name="name"
-                                        value={data.name}
+                                        name="Nama"
+                                        value={data.Nama}
                                         onChange={(e) =>
-                                            setData("name", e.target.value)
+                                            setData("Nama", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.name} />
+                                    <InputError message={errors.Nama} />
                                 </div>
                                 <div className="mt-4">
                                     <InputLabel
-                                        htmlFor="category_id"
+                                        htmlFor="Id_Kategori"
                                         value="Category"
                                     />
                                     <SelectInput
-                                        id="category_id"
-                                        name="category_id"
-                                        value={data.category_id}
+                                        id="Id_Kategori"
+                                        name="Id_Kategori"
+                                        value={data.Id_Kategori}
                                         onChange={(e) =>
                                             setData(
-                                                "category_id",
+                                                "Id_Kategori",
                                                 e.target.value
                                             )
                                         }
-                                        options={categories.map((category) => ({
-                                            value: category.id,
-                                            label: category.name,
+                                        options={kategori.map((kategori) => ({
+                                            value: kategori.Id_Kategori,
+                                            label: kategori.Nama,
                                         }))}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.category_id} />
+                                    <InputError message={errors.Id_Kategori} />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="price" value="Price" />
+                                    <InputLabel htmlFor="Harga" value="Price" />
                                     <TextInput
-                                        id="price"
+                                        id="Harga"
                                         type="text"
-                                        name="price"
-                                        value={data.price}
+                                        name="Harga"
+                                        value={data.Harga}
                                         onChange={(e) =>
-                                            setData("price", e.target.value)
+                                            setData("Harga", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.price} />
+                                    <InputError message={errors.Harga} />
                                 </div>
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
@@ -118,8 +117,8 @@ export default function Index({ auth, products, categories }) {
                                 />
                             </div>
                             <dl className="border-t border-gray-200">
-                                <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-medium text-gray-900">
+                                <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
+                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
                                         Name
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
@@ -135,63 +134,48 @@ export default function Index({ auth, products, categories }) {
                                         Actions
                                     </dt>
                                 </div>
-                                {filteredProducts.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6 items-center"
-                                    >
-                                        <dt className="text-sm text-gray-900">
-                                            {product.name}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            {product.category.name}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            Rp.{" "}
-                                            {parseInt(
-                                                product.price
-                                            ).toLocaleString()}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            {product.status}
-                                        </dt>
-                                        <dt className="text-sm text-gray-900">
-                                            <SecondaryButton
-                                                onClick={() =>
-                                                    toggleStatus(product.id)
-                                                }
-                                                disabled={processing}
-                                            >
-                                                {product.status === "Active" ? (
-                                                    <i
-                                                        className="fas fa-toggle-on"
-                                                        style={{
-                                                            lineHeight: 1.3,
-                                                        }}
-                                                    ></i>
-                                                ) : (
-                                                    <i
-                                                        className="fas fa-toggle-off"
-                                                        style={{
-                                                            lineHeight: 1.3,
-                                                        }}
-                                                    ></i>
-                                                )}
-                                            </SecondaryButton>
-                                            <Link
-                                                href={route(
-                                                    "products.edit",
-                                                    product.id
-                                                )}
-                                                className="ml-2"
-                                            >
-                                                <SecondaryButton>
-                                                    Edit
-                                                </SecondaryButton>
-                                            </Link>
+                                {filteredProducts.length > 0 ? (
+                                    filteredProducts.map((produk) => (
+                                        <div
+                                            key={produk.Id_Produk}
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
+                                        >
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
+                                                {produk.Nama}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                {produk.kategori.Nama}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                Rp.{" "}
+                                                {parseInt(
+                                                    produk.Harga
+                                                ).toLocaleString()}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                {produk.Status}
+                                            </dt>
+                                            <dt className="text-sm text-gray-900">
+                                                <Link
+                                                    href={route(
+                                                        "produk.edit",
+                                                        produk.Id_Produk
+                                                    )}
+                                                >
+                                                    <SecondaryButton>
+                                                        Edit
+                                                    </SecondaryButton>
+                                                </Link>
+                                            </dt>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="bg-white px-4 py-5 sm:px-6">
+                                        <dt className="text-sm text-gray-500 sm:col-span-6 text-center">
+                                            No products found.
                                         </dt>
                                     </div>
-                                ))}
+                                )}
                             </dl>
                         </div>
                     </div>

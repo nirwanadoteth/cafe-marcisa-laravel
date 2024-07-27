@@ -9,17 +9,18 @@ import SelectInput from "@/Components/SelectInput";
 import { Transition } from "@headlessui/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function Edit({ auth, category }) {
+export default function Edit({ auth, kategori }) {
     const { data, setData, put, processing, errors, recentlySuccessful } =
         useForm({
-            name: category.name,
-            status: category.status,
+            Nama: kategori.Nama,
+            Status: kategori.Status,
         });
 
+    console.log(kategori);
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("categories.update", category.id));
+        put(route("kategori.update", kategori.Id_Kategori));
     };
 
     return (
@@ -39,30 +40,30 @@ export default function Edit({ auth, category }) {
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <form onSubmit={submit} className="mt-6 space-y-6">
                                 <div>
-                                    <InputLabel htmlFor="name" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Name" />
                                     <TextInput
-                                        id="name"
+                                        id="Nama"
                                         type="text"
-                                        name="name"
-                                        value={data.name}
+                                        name="Nama"
+                                        value={data.Nama}
                                         onChange={(e) =>
-                                            setData("name", e.target.value)
+                                            setData("Nama", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.name} />
+                                    <InputError message={errors.Nama} />
                                 </div>
                                 <div>
                                     <InputLabel
-                                        htmlFor="status"
+                                        htmlFor="Status"
                                         value="Status"
                                     />
                                     <SelectInput
-                                        id="status"
-                                        name="status"
-                                        value={data.status}
+                                        id="Status"
+                                        name="Status"
+                                        value={data.Status}
                                         onChange={(e) =>
-                                            setData("status", e.target.value)
+                                            setData("Status", e.target.value)
                                         }
                                         options={[
                                             {
@@ -76,7 +77,7 @@ export default function Edit({ auth, category }) {
                                         ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.status} />
+                                    <InputError message={errors.Status} />
                                 </div>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>
@@ -95,7 +96,7 @@ export default function Edit({ auth, category }) {
                                         </p>
                                     </Transition>
 
-                                    <Link href={route("categories.index")}>
+                                    <Link href={route("kategori.index")}>
                                         <SecondaryButton>
                                             Cancel
                                         </SecondaryButton>

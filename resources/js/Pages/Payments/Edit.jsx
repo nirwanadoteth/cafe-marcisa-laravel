@@ -65,7 +65,7 @@ export default function Edit({
     };
 
     const filteredProducts = products.reduce((acc, product) => {
-        const category = categories.find(
+        const category = kategori.find(
             (category) => category.id === product.category_id
         );
 

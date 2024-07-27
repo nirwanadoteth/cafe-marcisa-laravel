@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
-import SelectInput from "@/Components/SelectInput";
 
-export default function Show({ auth, order }) {
+export default function Show({ auth, pesanan }) {
+    const subTotal = pesanan.rincian_pesanan.reduce((total, rincian) => {
+        return total + rincian.Jumlah * parseFloat(rincian.produk.Harga);
+    }, 0);
+    const tax = subTotal * 0.1;
+    const totalPrice = subTotal + tax;
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -27,34 +28,57 @@ export default function Show({ auth, order }) {
                             <dl>
                                 <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-semibold text-gray-900">
-                                        Customer Name : {order.customer_name}
+                                        Customer Name :{" "}
+                                        <span className="text-sm font-normal">
+                                            {pesanan.pembeli.Nama}
+                                        </span>
                                     </dt>
                                 </div>
-                                {order.products.map((product) => (
+                                {pesanan.rincian_pesanan.map((rincian) => (
                                     <div
-                                        key={product.id}
+                                        key={rincian.produk.Id_Produk}
                                         className="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 items-center"
                                     >
                                         <dt className="text-sm text-gray-900 sm:col-span-2">
-                                            {product.name}
+                                            {rincian.produk.Nama}
                                         </dt>
                                         <dt className="text-sm text-gray-900 sm:col-span-1">
-                                            {/* for every 3 zero num add dot */}
-                                            {product.pivot.quantity} x {parseInt(product.price).toLocaleString()}
+                                            {rincian.Jumlah} x{" "}
+                                            {parseInt(
+                                                rincian.produk.Harga
+                                            ).toLocaleString()}
                                         </dt>
                                         <dt className="text-sm text-gray-900 text-right sm:col-span-1">
-                                            {(product.pivot.quantity * product.price).toLocaleString()}
+                                            {(
+                                                rincian.Jumlah *
+                                                rincian.produk.Harga
+                                            ).toLocaleString()}
                                         </dt>
                                     </div>
                                 ))}
                                 <div className="bg-white border-t px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                                    <dt className="text-sm font-semibold text-gray-900 text-right sm:col-span-2">
-                                        Total Price : Rp. {parseInt(order.total_price).toLocaleString()}
+                                    <dt className="text-sm font-semibold text-gray-900">
+                                        Subtotal
+                                    </dt>
+                                    <dt className="text-sm text-gray-900 text-right">
+                                        {parseInt(subTotal).toLocaleString()}
+                                    </dt>
+                                    <dt className="text-sm font-semibold text-gray-900">
+                                        Tax (10%)
+                                    </dt>
+                                    <dt className="text-sm text-gray-900 text-right">
+                                        {parseInt(tax).toLocaleString()}
+                                    </dt>
+                                    <dt className="text-sm font-semibold text-gray-900">
+                                        Total
+                                    </dt>
+                                    <dt className="text-sm text-gray-900 text-right">
+                                        {parseInt(totalPrice).toLocaleString()}
                                     </dt>
                                 </div>
                             </dl>
-                            <div className="flex items-center justify-end gap-4">
-                                <Link href={route("orders.index")}>
+                            <div className="flex items-center border-t justify-end px-4 sm:px-6 py-4">
+                                <Link href={route("pesanan.index")}>
                                     <SecondaryButton>Back</SecondaryButton>
                                 </Link>
                             </div>
