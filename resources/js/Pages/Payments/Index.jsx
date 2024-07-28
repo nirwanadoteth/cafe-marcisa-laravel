@@ -56,7 +56,7 @@ export default function Index({ auth, pesanan }) {
                                             <dt className="text-sm text-gray-900 sm:col-span-1">
                                                 {pesanan.nota
                                                     ? pesanan.nota.Status
-                                                    : "Unpaid"}
+                                                    : "Belum Dibayar"}
                                             </dt>
                                             <dt className="text-sm text-gray-900 sm:col-span-1">
                                                 <Link
