@@ -21,8 +21,8 @@ class PesananController extends Controller
     {
         return Inertia::render("Orders/Index", [
             'pesanan' => Pesanan::with(['pembeli', 'nota'])->orderByDesc('Tanggal')->get(),
-            'produk' => Produk::where('Status', 'Active')->get(),
-            'kategori' => Kategori::where('Status', 'Active')->get(),
+            'produk' => Produk::where('Status', 'Aktif')->get(),
+            'kategori' => Kategori::where('Status', 'Aktif')->get(),
         ]);
     }
 
@@ -32,8 +32,8 @@ class PesananController extends Controller
     public function create()
     {
         return Inertia::render('Orders/New', [
-            'kategori' => Kategori::where('Status', 'Active')->orderBy('Nama')->get(),
-            'produk' => Produk::where('Status', 'Active')->orderBy('Nama')->get(),
+            'kategori' => Kategori::where('Status', 'Aktif')->orderBy('Nama')->get(),
+            'produk' => Produk::where('Status', 'Aktif')->orderBy('Nama')->get(),
         ]);
     }
 
@@ -93,8 +93,8 @@ class PesananController extends Controller
     {
         return Inertia::render('Orders/Edit', [
             'pesanan' => Pesanan::with(['pembeli', 'rincian_pesanan.produk'])->find($pesanan->Id_Pesanan),
-            'kategori' => Kategori::orderBy('Nama')->where('Status', 'Active')->get(),
-            'produk' => Produk::orderBy('Nama')->where('Status', 'Active')->get(),
+            'kategori' => Kategori::orderBy('Nama')->where('Status', 'Aktif')->get(),
+            'produk' => Produk::orderBy('Nama')->where('Status', 'Aktif')->get(),
         ]);
     }
 

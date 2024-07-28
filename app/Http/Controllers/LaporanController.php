@@ -51,7 +51,7 @@ class LaporanController extends Controller
             ->whereDate('Tanggal', '<=', $endDate)
             ->get();
 
-        $label = $selectedLabel === 'Today' || $selectedLabel === 'Yesterday' ? $startDate->format('d F Y') : $startDate->format('d F Y') . ' - ' . $endDate->format('d F Y');
+        $label = $selectedLabel === 'Hari Ini' || $selectedLabel === 'Kemarin' ? $startDate->format('d F Y') : $startDate->format('d F Y') . ' - ' . $endDate->format('d F Y');
 
         $data = [
             'nota' => $nota,

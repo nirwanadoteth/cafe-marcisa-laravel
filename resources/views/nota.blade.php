@@ -32,7 +32,10 @@
     <table class="w-full">
         <thead>
             <tr>
-                <th colspan="2" class="text-center">MARCISA</th>
+                <th colspan="2" class="text-center">NOTA PEMBAYARAN</th>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-center">CAFE MARCISA</th>
             </tr>
             <tr>
                 <td colspan="2" class="text-center"><br /></td>
@@ -42,15 +45,19 @@
                 <td class="text-right">{{ \Carbon\Carbon::parse($pesanan->nota->Tanggal)->format('H:i:s') }}</td>
             </tr>
             <tr>
-                <td>Receipt ID</td>
+                <td>Id Nota</td>
                 <td class="text-right">{{ $pesanan->nota->Id_Nota }}</td>
             </tr>
             <tr>
-                <td>Cashier</td>
+                <td>Id Pesanan</td>
+                <td class="text-right">{{ $pesanan->Id_Pesanan }}</td>
+            </tr>
+            <tr>
+                <td>Kasir</td>
                 <td class="text-right">{{ $pesanan->user->Username }}</td>
             </tr>
             <tr>
-                <td>Customer</td>
+                <td>Pembeli</td>
                 <td class="text-right">{{ $pesanan->pembeli->Nama }}</td>
             </tr>
         </thead>
@@ -79,7 +86,7 @@
                 <td class="text-right" colspan="1">{{ number_format($pesanan->nota->Sub_Total) }}</td>
             </tr>
             <tr>
-                <td colspan="1">Tax (10%)</td>
+                <td colspan="1">Pajak (10%)</td>
                 <td class="text-right" colspan="1">{{ number_format($pesanan->nota->Pajak) }}</td>
             </tr>
             <tr>
@@ -87,11 +94,11 @@
                 <td class="text-right" colspan="1">{{ number_format($pesanan->nota->Total_Harga) }}</td>
             </tr>
             <tr>
-                <td colspan="1">Cash</td>
+                <td colspan="1">Diterima</td>
                 <td class="text-right" colspan="1">{{ number_format($pesanan->nota->Diterima) }}</td>
             </tr>
             <tr>
-                <td colspan="1">Change</td>
+                <td colspan="1">Kembali</td>
                 <td class="text-right" colspan="1">{{ number_format($pesanan->nota->Kembali) }}</td>
             </tr>
         </tbody>
@@ -100,7 +107,7 @@
                 <td colspan="2"><br /></td>
             </tr>
             <tr>
-                <td colspan="2" class="font-medium text-center">*** THANK YOU ***</td>
+                <td colspan="2" class="font-medium text-center">*** TERIMA KASIH ***</td>
             </tr>
         </tfoot>
     </table>

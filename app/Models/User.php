@@ -26,6 +26,7 @@ class User extends Authenticatable
         'Role',
     ];
 
+    protected $authIdentifierName = 'Id_User';
     protected $authPasswordName = 'Password';
     protected $rememberTokenName = 'Remember_Token';
 

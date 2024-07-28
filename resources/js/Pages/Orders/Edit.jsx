@@ -67,7 +67,7 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
 
     const filteredProducts = produk.reduce((acc, product) => {
         const category = kategori.find(
-            (category) => category.Id_Kategori === product.Id_Kategori && category.Status === 'Active'
+            (category) => category.Id_Kategori === product.Id_Kategori && category.Status === 'Aktif'
         );
 
         if (!category) {
@@ -88,11 +88,11 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Orders
+                    Edit Pesanan
                 </h2>
             }
         >
-            <Head title="Orders" />
+            <Head title="Pesanan" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -102,7 +102,7 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
                                 <dl className="mt-4 border-t border-b border-gray-200">
                                     <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-semibold text-gray-900">
-                                            Customer Name :{" "}
+                                            Nama Pembeli :{" "}
                                             <span className="text-sm font-normal">
                                                 {pesanan.pembeli.Nama}
                                             </span>
@@ -188,7 +188,7 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
                                 </dl>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>
-                                        Save
+                                        Simpan
                                     </PrimaryButton>
 
                                     <Transition
@@ -205,7 +205,7 @@ export default function Edit({ auth, pesanan, kategori, produk }) {
 
                                     <Link href={route("pesanan.index")}>
                                         <SecondaryButton>
-                                            Cancel
+                                            Batal
                                         </SecondaryButton>
                                     </Link>
                                 </div>

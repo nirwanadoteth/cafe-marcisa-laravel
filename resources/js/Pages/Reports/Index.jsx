@@ -19,39 +19,39 @@ const timeZone = "Asia/Jakarta";
 
 const predefinedRanges = [
     {
-        label: "Today",
+        label: "Hari Ini",
         range: () => ({ startDate: new Date(), endDate: new Date() }),
     },
     {
-        label: "Yesterday",
+        label: "Kemarin",
         range: () => ({
             startDate: addDays(new Date(), -1),
             endDate: addDays(new Date(), -1),
         }),
     },
     {
-        label: "This Week",
+        label: "Minggu Ini",
         range: () => ({
             startDate: startOfWeek(new Date()),
             endDate: endOfWeek(new Date()),
         }),
     },
     {
-        label: "Last Week",
+        label: "Minggu Lalu",
         range: () => ({
             startDate: startOfWeek(addDays(new Date(), -7)),
             endDate: endOfWeek(addDays(new Date(), -7)),
         }),
     },
     {
-        label: "This Month",
+        label: "Bulan Ini",
         range: () => ({
             startDate: startOfMonth(new Date()),
             endDate: endOfMonth(new Date()),
         }),
     },
     {
-        label: "Last Month",
+        label: "Bulan Lalu",
         range: () => ({
             startDate: startOfMonth(subMonths(new Date(), 1)),
             endDate: endOfMonth(subMonths(new Date(), 1)),
@@ -76,11 +76,11 @@ const NotaList = ({ nota }) => (
         <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-900">No</dt>
             <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
-                Customer Name
+                Nama Pembeli
             </dt>
             <dt className="text-sm font-medium text-gray-900">Total</dt>
-            <dt className="text-sm font-medium text-gray-900">Cash</dt>
-            <dt className="text-sm font-medium text-gray-900">Change</dt>
+            <dt className="text-sm font-medium text-gray-900">Diterima</dt>
+            <dt className="text-sm font-medium text-gray-900">Kembali</dt>
         </div>
         {nota.length > 0 ? (
             nota.map((nota, index) => (
@@ -106,7 +106,7 @@ const NotaList = ({ nota }) => (
         ) : (
             <div className="bg-white px-4 py-5 sm:px-6">
                 <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
-                    No data found.
+                    Data tidak ditemukan.
                 </dt>
             </div>
         )}
@@ -191,11 +191,11 @@ export default function Index({ auth }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Reports
+                    Laporan
                 </h2>
             }
         >
-            <Head title="Reports" />
+            <Head title="Laporan" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -209,14 +209,14 @@ export default function Index({ auth }) {
                                     onClick={fetchData}
                                     className="ml-3 mt-4"
                                 >
-                                    Show
+                                    Tampilkan
                                 </SecondaryButton>
                                 <PrimaryButton
                                     // onClick={printPDF}
                                     className="ml-3 mt-4"
                                     disabled={nota.length === 0 || processing}
                                 >
-                                    Print PDF
+                                    Cetak Laporan
                                 </PrimaryButton>
                             </div>
                         </form>

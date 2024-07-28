@@ -35,11 +35,11 @@ export default function Index({ auth, produk, kategori }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Products
+                    Produk
                 </h2>
             }
         >
-            <Head title="Products" />
+            <Head title="Produk" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -47,7 +47,7 @@ export default function Index({ auth, produk, kategori }) {
                         <div className="p-6 bg-white">
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="Nama" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Nama" />
                                     <TextInput
                                         id="Nama"
                                         type="text"
@@ -63,7 +63,7 @@ export default function Index({ auth, produk, kategori }) {
                                 <div className="mt-4">
                                     <InputLabel
                                         htmlFor="Id_Kategori"
-                                        value="Category"
+                                        value="Kategori"
                                     />
                                     <SelectInput
                                         id="Id_Kategori"
@@ -84,7 +84,7 @@ export default function Index({ auth, produk, kategori }) {
                                     <InputError message={errors.Id_Kategori} />
                                 </div>
                                 <div className="mt-4">
-                                    <InputLabel htmlFor="Harga" value="Price" />
+                                    <InputLabel htmlFor="Harga" value="Harga" />
                                     <TextInput
                                         id="Harga"
                                         type="text"
@@ -99,7 +99,7 @@ export default function Index({ auth, produk, kategori }) {
                                 </div>
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing || kategori.length === 0}>
-                                        Add Product
+                                        Tambah Produk
                                     </PrimaryButton>
                                 </div>
                             </form>
@@ -112,26 +112,26 @@ export default function Index({ auth, produk, kategori }) {
                                     name="search"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="Search products"
+                                    placeholder="Cari produk"
                                     className="mb-4 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                             </div>
                             <dl className="border-t border-gray-200">
                                 <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
-                                        Name
+                                        Nama
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
-                                        Category
+                                        Kategori
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
-                                        Price
+                                        Harga
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
                                         Status
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
-                                        Actions
+                                        Aksi
                                     </dt>
                                 </div>
                                 {filteredProducts.length > 0 ? (
@@ -172,7 +172,7 @@ export default function Index({ auth, produk, kategori }) {
                                 ) : (
                                     <div className="bg-white px-4 py-5 sm:px-6">
                                         <dt className="text-sm text-gray-500 sm:col-span-6 text-center">
-                                            No products found.
+                                            Data tidak ditemukan.
                                         </dt>
                                     </div>
                                 )}

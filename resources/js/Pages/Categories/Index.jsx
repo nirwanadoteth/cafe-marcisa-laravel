@@ -33,11 +33,11 @@ export default function Index({ auth, kategori }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Categories
+                    Kategori
                 </h2>
             }
         >
-            <Head title="Categories" />
+            <Head title="Kategori" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@ export default function Index({ auth, kategori }) {
                         <div className="p-6 bg-white">
                             <form onSubmit={submit}>
                                 <div>
-                                    <InputLabel htmlFor="Nama" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Nama" />
                                     <TextInput
                                         id="Nama"
                                         type="text"
@@ -60,7 +60,7 @@ export default function Index({ auth, kategori }) {
                                 </div>
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
-                                        Add Category
+                                        Tambah Kategori
                                     </PrimaryButton>
                                 </div>
                             </form>
@@ -73,20 +73,20 @@ export default function Index({ auth, kategori }) {
                                     name="search"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="Search categories"
+                                    placeholder="Cari kategori"
                                     className="mb-4 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                 />
                             </div>
                             <dl className="border-t border-gray-200">
                                 <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
-                                        Name
+                                        Nama
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
                                         Status
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
-                                        Actions
+                                        Aksi
                                     </dt>
                                 </div>
                                 {filteredKategori.length > 0 ? (
@@ -121,7 +121,7 @@ export default function Index({ auth, kategori }) {
                                 ) : (
                                     <div className="bg-white px-4 py-5 sm:px-6">
                                         <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
-                                            No categories found.
+                                            Data tidak ditemukan.
                                         </dt>
                                     </div>
                                 )}

@@ -54,7 +54,7 @@ export default function New({ auth, kategori, produk }) {
 
     const filteredProducts = produk.reduce((acc, product) => {
         const category = kategori.find(
-            (category) => category.Id_Kategori === product.Id_Kategori && category.Status === 'Active'
+            (category) => category.Id_Kategori === product.Id_Kategori && category.Status === 'Aktif'
         );
 
         if (!category) {
@@ -74,11 +74,11 @@ export default function New({ auth, kategori, produk }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Orders
+                    Tambah Pesanan
                 </h2>
             }
         >
-            <Head title="Orders" />
+            <Head title="Pesanan" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -88,7 +88,7 @@ export default function New({ auth, kategori, produk }) {
                                 <div>
                                     <InputLabel
                                         htmlFor="Nama"
-                                        value="Customer Name"
+                                        value="Nama Pembeli"
                                     />
                                     <TextInput
                                         id="Nama"
@@ -171,11 +171,11 @@ export default function New({ auth, kategori, produk }) {
                                 </dl>
                                 <div className="flex items-center justify-end py-4 gap-4">
                                     <PrimaryButton disabled={processing}>
-                                        Create Order
+                                        Simpan
                                     </PrimaryButton>
                                     <Link href={route("pesanan.index")}>
                                         <SecondaryButton>
-                                            Cancel
+                                            Batal
                                         </SecondaryButton>
                                     </Link>
                                 </div>

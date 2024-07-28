@@ -15,11 +15,11 @@ export default function Show({ auth, pesanan }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Orders
+                    Rincian Pesanan
                 </h2>
             }
         >
-            <Head title="Orders" />
+            <Head title="Pesanan" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -28,7 +28,7 @@ export default function Show({ auth, pesanan }) {
                             <dl>
                                 <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-semibold text-gray-900">
-                                        Customer Name :{" "}
+                                        Nama Pembeli :{" "}
                                         <span className="text-sm font-normal">
                                             {pesanan.pembeli.Nama}
                                         </span>
@@ -64,7 +64,7 @@ export default function Show({ auth, pesanan }) {
                                         {parseInt(subTotal).toLocaleString()}
                                     </dt>
                                     <dt className="text-sm font-semibold text-gray-900">
-                                        Tax (10%)
+                                        Pajak (10%)
                                     </dt>
                                     <dt className="text-sm text-gray-900 text-right">
                                         {parseInt(tax).toLocaleString()}
@@ -79,7 +79,7 @@ export default function Show({ auth, pesanan }) {
                             </dl>
                             <div className="flex items-center border-t justify-end px-4 sm:px-6 py-4">
                                 <Link href={route("pesanan.index")}>
-                                    <SecondaryButton>Back</SecondaryButton>
+                                    <SecondaryButton>Kembali</SecondaryButton>
                                 </Link>
                             </div>
                         </div>

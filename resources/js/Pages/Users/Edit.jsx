@@ -14,7 +14,7 @@ export default function Edit({ auth, user }) {
         useForm({
             Username: user.Username,
             current_password: "",
-            Password: "",
+            password: "",
             password_confirmation: "",
             Role: user.Role,
         });
@@ -22,7 +22,7 @@ export default function Edit({ auth, user }) {
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("user.update", user.id));
+        put(route("user.update", user.Id_User));
     };
 
     return (
@@ -30,11 +30,11 @@ export default function Edit({ auth, user }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Users
+                    Edit User
                 </h2>
             }
         >
-            <Head title="Users" />
+            <Head title="User" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -61,7 +61,7 @@ export default function Edit({ auth, user }) {
                                 <div>
                                     <InputLabel
                                         htmlFor="current_password"
-                                        value="Current Password"
+                                        value="Password Saat Ini"
                                     />
                                     <TextInput
                                         id="current_password"
@@ -82,25 +82,25 @@ export default function Edit({ auth, user }) {
                                 </div>
                                 <div>
                                     <InputLabel
-                                        htmlFor="Password"
-                                        value="Password"
+                                        htmlFor="password"
+                                        value="Password Baru"
                                     />
                                     <TextInput
-                                        id="Password"
+                                        id="password"
                                         type="password"
-                                        name="Password"
-                                        value={data.Password}
+                                        name="password"
+                                        value={data.password}
                                         onChange={(e) =>
-                                            setData("Password", e.target.value)
+                                            setData("password", e.target.value)
                                         }
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
-                                    <InputError message={errors.Password} />
+                                    <InputError message={errors.password} />
                                 </div>
                                 <div>
                                     <InputLabel
                                         htmlFor="password_confirmation"
-                                        value="Confirm Password"
+                                        value="Konfirmasi Password"
                                     />
                                     <TextInput
                                         id="password_confirmation"
@@ -148,7 +148,7 @@ export default function Edit({ auth, user }) {
                                 </div>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>
-                                        Save
+                                        Simpan
                                     </PrimaryButton>
 
                                     <Transition
@@ -165,7 +165,7 @@ export default function Edit({ auth, user }) {
 
                                     <Link href={route("user.index")}>
                                         <SecondaryButton>
-                                            Cancel
+                                            Batal
                                         </SecondaryButton>
                                     </Link>
                                 </div>

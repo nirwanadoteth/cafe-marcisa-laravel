@@ -13,11 +13,11 @@ export default function Dashboard({
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    Beranda
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Beranda" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -26,7 +26,7 @@ export default function Dashboard({
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div className="bg-gray-900 p-4 shadow-sm rounded-lg">
                                     <h3 className="mb-4 font-semibold text-lg">
-                                        Total Categories
+                                        Total Kategori
                                     </h3>
                                     <span className="fas fa-list-alt fa-2xl"></span>
                                     <p className="mt-4 text-2xl">
@@ -35,7 +35,7 @@ export default function Dashboard({
                                 </div>
                                 <div className="bg-gray-900 p-4 shadow-sm rounded-lg">
                                     <h3 className="mb-4 font-semibold text-lg">
-                                        Total Products
+                                        Total Produk
                                     </h3>
                                     <span className="fas fa-box fa-2xl"></span>
                                     <p className="mt-4 text-2xl">
@@ -44,7 +44,7 @@ export default function Dashboard({
                                 </div>
                                 <div className="bg-gray-900 p-4 shadow-sm rounded-lg">
                                     <h3 className="mb-4 font-semibold text-lg">
-                                        Favorite Product
+                                        Produk Terbaik
                                     </h3>
                                     <span className="fas fa-star fa-2xl"></span>
                                     <p className="mt-4 text-2xl">
@@ -53,7 +53,7 @@ export default function Dashboard({
                                 </div>
                                 <div className="bg-gray-900 p-4 shadow-sm rounded-lg">
                                     <h3 className="mb-4 font-semibold text-lg">
-                                        Orders Today
+                                        Total Pesanan Hari Ini
                                     </h3>
                                     <span className="fas fa-shopping-cart fa-2xl"></span>
                                     <p className="mt-4 text-2xl">

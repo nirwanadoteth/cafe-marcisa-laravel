@@ -29,11 +29,11 @@ export default function Edit({ auth, produk, kategori }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Products
+                    Edit Produk
                 </h2>
             }
         >
-            <Head title="Products" />
+            <Head title="Produk" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -41,7 +41,7 @@ export default function Edit({ auth, produk, kategori }) {
                         <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <form onSubmit={submit} className="mt-6 space-y-6">
                                 <div>
-                                    <InputLabel htmlFor="Nama" value="Name" />
+                                    <InputLabel htmlFor="Nama" value="Nama" />
                                     <TextInput
                                         id="Nama"
                                         type="text"
@@ -57,7 +57,7 @@ export default function Edit({ auth, produk, kategori }) {
                                 <div>
                                     <InputLabel
                                         htmlFor="Id_Kategori"
-                                        value="Category"
+                                        value="Kategori"
                                     />
                                     <SelectInput
                                         id="Id_Kategori"
@@ -78,7 +78,7 @@ export default function Edit({ auth, produk, kategori }) {
                                     <InputError message={errors.Id_Kategori} />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="Harga" value="Price" />
+                                    <InputLabel htmlFor="Harga" value="Harga" />
                                     <TextInput
                                         id="Harga"
                                         type="text"
@@ -107,12 +107,12 @@ export default function Edit({ auth, produk, kategori }) {
                                         }
                                         options={[
                                             {
-                                                value: "Active",
-                                                label: "Active",
+                                                value: "Aktif",
+                                                label: "Aktif",
                                             },
                                             {
-                                                value: "Inactive",
-                                                label: "Inactive",
+                                                value: "Tidak Aktif",
+                                                label: "Tidak Aktif",
                                             },
                                         ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
@@ -121,7 +121,7 @@ export default function Edit({ auth, produk, kategori }) {
                                 </div>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>
-                                        Save
+                                        Simpan
                                     </PrimaryButton>
 
                                     <Transition
@@ -138,7 +138,7 @@ export default function Edit({ auth, produk, kategori }) {
 
                                     <Link href={route("produk.index")}>
                                         <SecondaryButton>
-                                            Cancel
+                                            Batal
                                         </SecondaryButton>
                                     </Link>
                                 </div>

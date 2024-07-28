@@ -18,10 +18,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $totalCategories = Kategori::where('Status', 'Active')->count();
-    $totalProducts = Produk::where('Status', 'Active')->count();
-    $fav = Produk::where('Status', 'Active')->withCount('rincian_pesanan')->orderByDesc('rincian_pesanan_count')->first();
-    $favProduct = $fav ? ($fav->rincian_pesanan_count > 0 ? $fav->Nama : 'No data') : 'No data';
+    $totalCategories = Kategori::where('Status', 'Aktif')->count();
+    $totalProducts = Produk::where('Status', 'Aktif')->count();
+    $fav = Produk::withCount('rincian_pesanan')->orderByDesc('rincian_pesanan_count')->first();
+    $favProduct = $fav ? ($fav->rincian_pesanan_count > 0 ? $fav->Nama : 'Tidak ada') : 'Tidak ada';
     $orderToday = Pesanan::whereDate('Tanggal', now('Asia/Jakarta'))->count();
 
     return Inertia::render('Dashboard', [

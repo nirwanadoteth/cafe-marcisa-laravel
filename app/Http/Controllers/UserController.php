@@ -41,7 +41,7 @@ class UserController extends Controller
             // 'name' => 'required|string|max:255',
             // 'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'Username' => 'required|string|max:255|unique:' . User::class,
-            'Password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'Role' => [Rule::enum(Role::class)],
         ]);
 
@@ -49,7 +49,7 @@ class UserController extends Controller
             // 'name' => $request->name,
             // 'email' => $request->email,
             'Username' => $request->Username,
-            'Password' => Hash::make($request->Password),
+            'Password' => Hash::make($request->password),
             'Role' => $request->Role,
         ]);
 
@@ -82,21 +82,21 @@ class UserController extends Controller
         // Check current Password if provided
         if ($request->current_password && !Hash::check($request->current_password, $user->Password)) {
             throw ValidationException::withMessages([
-                'current_password' => ['The provided Password does not match your current Password.'],
+                'current_password' => ['Password yang dimasukkan salah.'],
             ]);
         }
 
         // check if new Password is same as old Password
-        if ($request->Password && Hash::check($request->Password, $user->Password)) {
+        if ($request->password && Hash::check($request->password, $user->Password)) {
             throw ValidationException::withMessages([
-                'Password' => ['The new Password must be different from the current Password.'],
+                'password' => ['Password baru tidak boleh sama dengan password lama.'],
             ]);
         }
 
         // Validate input
         $validated = $request->validate([
-            'Username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-            'Password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'Username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->Id_User, 'Id_User')],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'Role' => [Rule::enum(Role::class)],
         ]);
 
@@ -107,9 +107,9 @@ class UserController extends Controller
         ]);
 
         // Update Password only if provided
-        if ($validated['Password']) {
+        if ($validated['password']) {
             $user->update([
-                'Password' => Hash::make($validated['Password']),
+                'Password' => Hash::make($validated['password']),
             ]);
 
             // Log the user out if they updated their own Password

@@ -21,7 +21,7 @@ export default function Index({ auth, user }) {
         reset,
     } = useForm({
         Username: "",
-        Password: "",
+        password: "",
         password_confirmation: "",
         Role: "Owner",
     });
@@ -31,7 +31,7 @@ export default function Index({ auth, user }) {
 
     useEffect(() => {
         return () => {
-            reset("Password", "password_confirmation");
+            reset("password", "password_confirmation");
         };
     }, []);
 
@@ -62,11 +62,11 @@ export default function Index({ auth, user }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Users
+                    User
                 </h2>
             }
         >
-            <Head title="Users" />
+            <Head title="User" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -100,25 +100,25 @@ export default function Index({ auth, user }) {
 
                                 <div className="mt-4">
                                     <InputLabel
-                                        htmlFor="Password"
+                                        htmlFor="password"
                                         value="Password"
                                     />
 
                                     <TextInput
-                                        id="Password"
+                                        id="password"
                                         type="password"
-                                        name="Password"
-                                        value={data.Password}
+                                        name="password"
+                                        value={data.password}
                                         className="mt-1 block w-full"
                                         autoComplete="new-password"
                                         onChange={(e) =>
-                                            setData("Password", e.target.value)
+                                            setData("password", e.target.value)
                                         }
                                         required
                                     />
 
                                     <InputError
-                                        message={errors.Password}
+                                        message={errors.password}
                                         className="mt-2"
                                     />
                                 </div>
@@ -126,7 +126,7 @@ export default function Index({ auth, user }) {
                                 <div className="mt-4">
                                     <InputLabel
                                         htmlFor="password_confirmation"
-                                        value="Confirm Password"
+                                        value="Konfirmasi Password"
                                     />
 
                                     <TextInput
@@ -186,7 +186,7 @@ export default function Index({ auth, user }) {
 
                                 <div className="mt-4 text-center">
                                     <PrimaryButton disabled={processing}>
-                                        Add User
+                                        Tambah User
                                     </PrimaryButton>
                                 </div>
                             </form>
@@ -201,7 +201,7 @@ export default function Index({ auth, user }) {
                                         Role
                                     </dt>
                                     <dt className="text-sm font-medium text-gray-900">
-                                        Actions
+                                        Aksi
                                     </dt>
                                 </div>
                                 {user.length > 0 ? (
@@ -234,7 +234,7 @@ export default function Index({ auth, user }) {
                                                     }
                                                     className="ml-2"
                                                 >
-                                                    Delete
+                                                    Hapus
                                                 </DangerButton>
                                             </dt>
                                         </div>
@@ -242,7 +242,7 @@ export default function Index({ auth, user }) {
                                 ) : (
                                     <div className="bg-white px-4 py-5 sm:px-6">
                                         <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
-                                            No users found.
+                                            Data tidak ditemukan.
                                         </dt>
                                     </div>
                                 )}
@@ -274,12 +274,12 @@ export default function Index({ auth, user }) {
                                     as="h3"
                                     className="text-lg leading-6 font-medium text-gray-900"
                                 >
-                                    Confirm Deletion
+                                    Konfirmasi Hapus User
                                 </DialogTitle>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        Are you sure you want to delete this
-                                        user? This action cannot be undone.
+                                        Apakah Anda yakin ingin menghapus user
+                                        ini?
                                     </p>
                                 </div>
                             </div>
@@ -290,14 +290,14 @@ export default function Index({ auth, user }) {
                                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:col-start-2 sm:text-sm"
                                 onClick={confirmDelete}
                             >
-                                Delete
+                                Hapus
                             </button>
                             <button
                                 type="button"
                                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
                                 onClick={closeModal}
                             >
-                                Cancel
+                                Batal
                             </button>
                         </div>
                     </div>

@@ -51,7 +51,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("dashboard")}
                                     active={route().current("dashboard")}
                                 >
-                                    Dashboard
+                                    Beranda
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -59,7 +59,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("kategori.index")}
                                     active={route().current("kategori.index")}
                                 >
-                                    Categories
+                                    Kategori
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -67,7 +67,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("produk.index")}
                                     active={route().current("produk.index")}
                                 >
-                                    Products
+                                    Produk
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -75,7 +75,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("pesanan.index")}
                                     active={route().current("pesanan.index")}
                                 >
-                                    Orders
+                                    Pesanan
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -83,7 +83,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("nota.index")}
                                     active={route().current("nota.index")}
                                 >
-                                    Payments
+                                    Pembayaran
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -91,7 +91,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("laporan.index")}
                                     active={route().current("laporan.index")}
                                 >
-                                    Reports
+                                    Laporan
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -99,7 +99,7 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("user.index")}
                                     active={route().current("user.index")}
                                 >
-                                    Users
+                                    User
                                 </NavLink>
                             </div>
                         </div>
@@ -177,43 +177,43 @@ export default function Authenticated({ user, header, children }) {
                             href={route("dashboard")}
                             active={route().current("dashboard")}
                         >
-                            Dashboard
+                            Beranda
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("kategori.index")}
                             active={route().current("kategori.index")}
                         >
-                            Categories
+                            Kategori
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("produk.index")}
                             active={route().current("produk.index")}
                         >
-                            Products
+                            Produk
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("pesanan.index")}
                             active={route().current("pesanan.index")}
                         >
-                            Orders
+                            Pesanan
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("nota.index")}
                             active={route().current("nota.index")}
                         >
-                            Payments
+                            Pembayaran
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("laporan.index")}
                             active={route().current("laporan.index")}
                         >
-                            Reports
+                            Laporan
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route("user.index")}
                             active={route().current("user.index")}
                         >
-                            Users
+                            User
                         </ResponsiveNavLink>
                     </div>
 
@@ -263,11 +263,11 @@ export default function Authenticated({ user, header, children }) {
                                     as="h3"
                                     className="text-lg leading-6 font-medium text-gray-900"
                                 >
-                                    Confirm Logout
+                                    Konfirmasi Logout
                                 </DialogTitle>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        Are you sure you want to logout?
+                                        Apakah Anda yakin ingin keluar?
                                     </p>
                                 </div>
                             </div>
@@ -285,7 +285,7 @@ export default function Authenticated({ user, header, children }) {
                                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
                                 onClick={closeModal}
                             >
-                                Cancel
+                                Batal
                             </button>
                         </div>
                     </div>

@@ -70,11 +70,11 @@ export default function Process({ auth, pesanan }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Payments
+                    Rincian Pembayaran
                 </h2>
             }
         >
-            <Head title="Payments" />
+            <Head title="Pembayaran" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -83,7 +83,7 @@ export default function Process({ auth, pesanan }) {
                             <dl>
                                 <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-semibold text-gray-900 sm:col-span-1">
-                                        Customer Name :{" "}
+                                        Nama Pembeli :{" "}
                                         <span className="font-normal">
                                             {pesanan.pembeli.Nama}
                                         </span>
@@ -124,7 +124,7 @@ export default function Process({ auth, pesanan }) {
                                         {parseInt(subTotal).toLocaleString()}
                                     </dt>
                                     <dt className="text-sm font-semibold text-gray-900">
-                                        Tax (10%)
+                                        Pajak (10%)
                                     </dt>
                                     <dt className="text-sm text-gray-900 text-right">
                                         {parseInt(tax).toLocaleString()}
@@ -145,7 +145,7 @@ export default function Process({ auth, pesanan }) {
                                     <div>
                                         <InputLabel
                                             htmlFor="pay"
-                                            value="Cash"
+                                            value="Diterima"
                                         />
                                         <TextInput
                                             id="pay"
@@ -161,7 +161,7 @@ export default function Process({ auth, pesanan }) {
                                     </div>
                                     <div className="flex items-center justify-end gap-4">
                                         <PrimaryButton disabled={processing}>
-                                            Process
+                                            Bayar
                                         </PrimaryButton>
 
                                         <Transition
@@ -178,7 +178,7 @@ export default function Process({ auth, pesanan }) {
 
                                         <Link href={route("nota.index")}>
                                             <SecondaryButton>
-                                                Cancel
+                                                Batal
                                             </SecondaryButton>
                                         </Link>
                                     </div>

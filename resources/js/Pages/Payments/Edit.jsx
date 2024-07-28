@@ -82,11 +82,11 @@ export default function Edit({
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Orders
+                    Pesanan
                 </h2>
             }
         >
-            <Head title="Orders" />
+            <Head title="Pesanan" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -96,7 +96,7 @@ export default function Edit({
                                 <dl className="mt-4 border-t border-gray-200">
                                     <div className="bg-white border-b px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                                         <dt className="text-sm font-semibold text-gray-900">
-                                            Customer Name : {data.customer_name}
+                                            Nama Pembeli : {data.customer_name}
                                         </dt>
                                     </div>
                                     {Object.entries(filteredProducts).map(
@@ -175,7 +175,7 @@ export default function Edit({
                                 </dl>
                                 <div className="flex items-center justify-end gap-4">
                                     <PrimaryButton disabled={processing}>
-                                        Save
+                                        Simpan
                                     </PrimaryButton>
 
                                     <Transition
@@ -186,13 +186,13 @@ export default function Edit({
                                         leaveTo="opacity-0"
                                     >
                                         <p className="text-sm text-gray-600">
-                                            Saved.
+                                            Disimpan.
                                         </p>
                                     </Transition>
 
                                     <Link href={route("orders.index")}>
                                         <SecondaryButton>
-                                            Cancel
+                                            Batal
                                         </SecondaryButton>
                                     </Link>
                                 </div>
