@@ -78,7 +78,7 @@ class NotaController extends Controller
             'Diterima' => $diterima,
             'Kembali' => $kembali,
             'Tanggal' => now(),
-            'Status' => 'Completed',
+            'Status' => 'Lunas',
         ]);
 
         return redirect()->route('nota.index')->with('success', 'Payment has been successfully processed.');

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('Diterima', 10, 2);
             $table->decimal('Kembali', 10, 2);
             $table->dateTime('Tanggal')->useCurrent();
-            $table->enum('Status', ['Completed'])->default('Completed');
+            $table->enum('Status', ['Lunas'])->default('Lunas');
         });
     }
 
