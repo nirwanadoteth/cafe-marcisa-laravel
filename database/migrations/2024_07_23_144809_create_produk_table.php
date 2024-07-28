@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('Id_Kategori')->constrained('kategori', 'Id_Kategori')->cascadeOnDelete();
             $table->string('Nama', 50);
             $table->decimal('Harga', 10, 2);
-            $table->enum('Status', ['Aktif', 'Tidak Aktif'])->default('Aktif');
+            $table->enum('Status', ['Aktif', 'Nonaktif'])->default('Aktif');
         });
     }
 

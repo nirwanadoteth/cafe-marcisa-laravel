@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kategori', function (Blueprint $table) {
             $table->id('Id_Kategori');
             $table->string('Nama', 50);
-            $table->enum('Status', ['Aktif', 'Tidak Aktif'])->default('Aktif');
+            $table->enum('Status', ['Aktif', 'Nonaktif'])->default('Aktif');
         });
     }
 

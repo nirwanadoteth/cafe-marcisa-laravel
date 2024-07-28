@@ -70,8 +70,8 @@ export default function Edit({ auth, kategori }) {
                                                 label: "Aktif",
                                             },
                                             {
-                                                value: "Tidak Aktif",
-                                                label: "Tidak Aktif",
+                                                value: "Nonaktif",
+                                                label: "Nonaktif",
                                             },
                                         ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
