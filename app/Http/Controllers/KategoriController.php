@@ -72,12 +72,7 @@ class KategoriController extends Controller
             'Status' => [Rule::enum(Status::class)],
         ]);
 
-        DB::transaction(function () use ($validated, $kategori) {
-            $kategori->update($validated);
-
-            Produk::where('Id_Kategori', $kategori->Id_Kategori)
-                ->update(['Status' => $validated['Status']]);
-        });
+        $kategori->update($validated);
 
         return redirect(route('kategori.index'))->with('success', 'Category updated successfully.');
     }

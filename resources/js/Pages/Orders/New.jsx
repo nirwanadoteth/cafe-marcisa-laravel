@@ -54,8 +54,12 @@ export default function New({ auth, kategori, produk }) {
 
     const filteredProducts = produk.reduce((acc, product) => {
         const category = kategori.find(
-            (category) => category.Id_Kategori === product.Id_Kategori
+            (category) => category.Id_Kategori === product.Id_Kategori && category.Status === 'Active'
         );
+
+        if (!category) {
+            return acc;
+        }
 
         if (!acc[category.Nama]) {
             acc[category.Nama] = [];

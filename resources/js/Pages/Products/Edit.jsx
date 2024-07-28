@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -10,17 +10,6 @@ import { Transition } from "@headlessui/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Edit({ auth, produk, kategori }) {
-    const [statusOptions, setStatusOptions] = useState([
-        {
-            value: "Active",
-            label: "Active",
-        },
-        {
-            value: "Inactive",
-            label: "Inactive",
-        },
-    ]);
-
     const { data, setData, put, processing, errors, recentlySuccessful } =
         useForm({
             Id_Kategori: produk.Id_Kategori,
@@ -34,29 +23,6 @@ export default function Edit({ auth, produk, kategori }) {
 
         put(route("produk.update", produk.Id_Produk));
     };
-
-    useEffect(() => {
-        const selectedCategory = kategori.find((cat) => cat.Id_Kategori === data.Id_Kategori);
-        if (selectedCategory && selectedCategory.Status === "Inactive") {
-            setStatusOptions([
-                {
-                    value: "Inactive",
-                    label: "Inactive",
-                },
-            ]);
-        } else {
-            setStatusOptions([
-                {
-                    value: "Active",
-                    label: "Active",
-                },
-                {
-                    value: "Inactive",
-                    label: "Inactive",
-                },
-            ]);
-        }
-    }, [data.Id_Kategori, kategori]);
 
     return (
         <AuthenticatedLayout
@@ -139,7 +105,16 @@ export default function Edit({ auth, produk, kategori }) {
                                         onChange={(e) =>
                                             setData("Status", e.target.value)
                                         }
-                                        options={statusOptions}
+                                        options={[
+                                            {
+                                                value: "Active",
+                                                label: "Active",
+                                            },
+                                            {
+                                                value: "Inactive",
+                                                label: "Inactive",
+                                            },
+                                        ]}
                                         className="mt-1 block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                     />
                                     <InputError message={errors.Status} />

@@ -27,6 +27,7 @@ class User extends Authenticatable
     ];
 
     protected $authPasswordName = 'Password';
+    protected $rememberTokenName = 'Remember_Token';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -35,7 +36,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'Password',
-        'remember_token',
+        'Remember_Token',
     ];
 
     /**
