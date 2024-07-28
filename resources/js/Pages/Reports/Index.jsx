@@ -71,60 +71,64 @@ const RangeSelector = ({ selectedRange, onChange }) => (
     />
 );
 
-const NotaList = ({ nota }) => (
-    <>
-        <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-900">No</dt>
-            <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
-                Nama Pembeli
-            </dt>
-            <dt className="text-sm font-medium text-gray-900">Total</dt>
-            <dt className="text-sm font-medium text-gray-900">Diterima</dt>
-            <dt className="text-sm font-medium text-gray-900">Kembali</dt>
-        </div>
-        {nota.length > 0 ? (
-            nota.map((nota, index) => (
-                <div
-                    key={nota.Id_Nota}
-                    className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
-                >
-                    <dt className="text-sm text-gray-900">{index + 1}</dt>
-                    <dt className="text-sm text-gray-900 sm:col-span-2">
-                        {nota.pesanan.pembeli.Nama}
-                    </dt>
-                    <dt className="text-sm text-gray-900">
-                        {parseInt(nota.Total_Harga).toLocaleString()}
-                    </dt>
-                    <dt className="text-sm text-gray-900">
-                        {parseInt(nota.Diterima).toLocaleString()}
-                    </dt>
-                    <dt className="text-sm text-gray-900">
-                        {parseInt(nota.Kembali).toLocaleString()}
+const NotaList = ({ nota }) => {
+    const total = nota.reduce(
+        (acc, curr) => acc + parseInt(curr.Total_Harga, 10),
+        0
+    );
+    return (
+        <>
+            <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
+                <dt className="text-sm font-medium text-gray-900">No</dt>
+                <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
+                    Nama Pembeli
+                </dt>
+                <dt className="text-sm font-medium text-gray-900">Total</dt>
+                <dt className="text-sm font-medium text-gray-900">Diterima</dt>
+                <dt className="text-sm font-medium text-gray-900">Kembali</dt>
+            </div>
+            {nota.length > 0 ? (
+                nota.map((nota, index) => (
+                    <div
+                        key={nota.Id_Nota}
+                        className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
+                    >
+                        <dt className="text-sm text-gray-900">{index + 1}</dt>
+                        <dt className="text-sm text-gray-900 sm:col-span-2">
+                            {nota.pesanan.pembeli.Nama}
+                        </dt>
+                        <dt className="text-sm text-gray-900">
+                            {parseInt(nota.Total_Harga).toLocaleString()}
+                        </dt>
+                        <dt className="text-sm text-gray-900">
+                            {parseInt(nota.Diterima).toLocaleString()}
+                        </dt>
+                        <dt className="text-sm text-gray-900">
+                            {parseInt(nota.Kembali).toLocaleString()}
+                        </dt>
+                    </div>
+                ))
+            ) : (
+                <div className="bg-white px-4 py-5 sm:px-6">
+                    <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                        Data tidak ditemukan.
                     </dt>
                 </div>
-            ))
-        ) : (
-            <div className="bg-white px-4 py-5 sm:px-6">
-                <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
-                    Data tidak ditemukan.
-                </dt>
-            </div>
-        )}
-        {nota.length > 0 && (
-            <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center">
-                <dt className="font-semibold text-sm text-gray-900 sm:col-span-3">
-                    TOTAL
-                </dt>
+            )}
+            {nota.length > 0 && (
+                <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center">
+                    <dt className="font-semibold text-sm text-gray-900 sm:col-span-3">
+                        TOTAL
+                    </dt>
 
-                <dt className="font-medium text-sm text-gray-900 sm:col-span-3">
-                    {parseInt(
-                        nota.reduce((acc, curr) => acc + curr.Total_Harga, 0)
-                    ).toLocaleString()}
-                </dt>
-            </div>
-        )}
-    </>
-);
+                    <dt className="font-medium text-sm text-gray-900 sm:col-span-3">
+                        {total.toLocaleString()}
+                    </dt>
+                </div>
+            )}
+        </>
+    );
+};
 
 export default function Index({ auth }) {
     const [selectedLabel, setSelectedLabel] = useState(
