@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum Status: string
 {
-    case ACTIVE = 'Aktif';
-    case INACTIVE = 'Nonaktif';
+    case AKTIF = 'Aktif';
+    case NONAKTIF = 'Nonaktif';
 }
