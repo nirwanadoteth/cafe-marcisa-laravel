@@ -5,6 +5,10 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { format } from "date-fns";
 
 export default function Index({ auth, pesanan }) {
+    const cetakNota = (idPesanan) => {
+        window.open(route("nota.pdf", idPesanan), "_blank");
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -24,7 +28,7 @@ export default function Index({ auth, pesanan }) {
                                 Pesanan Terbaru
                             </h3>
                             <dl className="border-t border-gray-200">
-                                <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6">
+                                <div className="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-7 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
                                         Nama Pembeli
                                     </dt>
@@ -34,7 +38,7 @@ export default function Index({ auth, pesanan }) {
                                     <dt className="text-sm font-medium text-gray-900 sm:col-span-1">
                                         Status
                                     </dt>
-                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-1">
+                                    <dt className="text-sm font-medium text-gray-900 sm:col-span-2">
                                         Aksi
                                     </dt>
                                 </div>
@@ -42,7 +46,7 @@ export default function Index({ auth, pesanan }) {
                                     pesanan.map((pesanan) => (
                                         <div
                                             key={pesanan.Id_Pesanan}
-                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-6 items-center"
+                                            className="bg-white px-4 py-5 sm:grid sm:grid-cols-7 sm:gap-4 sm:px-6 items-center"
                                         >
                                             <dt className="text-sm text-gray-900 sm:col-span-2">
                                                 {pesanan.pembeli.Nama}
@@ -58,7 +62,7 @@ export default function Index({ auth, pesanan }) {
                                                     ? pesanan.nota.Status
                                                     : "Belum Dibayar"}
                                             </dt>
-                                            <dt className="text-sm text-gray-900 sm:col-span-1">
+                                            <dt className="text-sm text-gray-900 sm:col-span-2">
                                                 <Link
                                                     href={route(
                                                         "nota.process",
@@ -73,15 +77,29 @@ export default function Index({ auth, pesanan }) {
                                                                 : false
                                                         }
                                                     >
-                                                        Proses
+                                                        Rincian
                                                     </SecondaryButton>
                                                 </Link>
+                                                <SecondaryButton
+                                                    onClick={() =>
+                                                        cetakNota(
+                                                            pesanan.Id_Pesanan
+                                                        )
+                                                    }
+                                                    disabled={
+                                                        pesanan.nota
+                                                            ? false
+                                                            : true
+                                                    }
+                                                >
+                                                    Cetak Nota
+                                                </SecondaryButton>
                                             </dt>
                                         </div>
                                     ))
                                 ) : (
                                     <div className="bg-white px-4 py-5 sm:px-6">
-                                        <dt className="text-sm text-gray-500 sm:col-span-5 text-center">
+                                        <dt className="text-sm text-gray-500 sm:col-span-7 text-center">
                                             Data tidak ditemukan.
                                         </dt>
                                     </div>

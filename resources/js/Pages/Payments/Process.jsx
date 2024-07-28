@@ -47,22 +47,16 @@ export default function Process({ auth, pesanan }) {
         setTotal(total);
     }, [pesanan]);
 
-    // const handlePdfDownload = () => {
-    //     window.open(route("nota.pdf", pesanan.Id_Pesanan), "_blank");
-    // };
-
     const submit = (e) => {
         e.preventDefault();
         clearErrors();
 
         if (parseFloat(data.pay) < total) {
-            setError("pay", "Payment amount is less than the total amount.");
+            setError("pay", "Pembayaran tidak mencukupi.");
             return;
         }
 
-        post(route("nota.store", pesanan.Id_Pesanan), {
-            onSuccess: () => window.open(route("nota.pdf", pesanan.Id_Pesanan), "_blank"),
-        });
+        post(route("nota.store", pesanan.Id_Pesanan));
     };
 
     return (

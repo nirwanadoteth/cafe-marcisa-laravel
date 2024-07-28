@@ -81,7 +81,7 @@ class NotaController extends Controller
             'Status' => 'Lunas',
         ]);
 
-        return redirect()->route('nota.index')->with('success', 'Payment has been successfully processed.');
+        return redirect()->route('nota.index')->with('success', 'Pembayaran berhasil.');
     }
 
     public function generatePdf(Pesanan $pesanan)

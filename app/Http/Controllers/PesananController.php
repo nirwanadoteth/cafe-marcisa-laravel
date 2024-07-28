@@ -73,7 +73,7 @@ class PesananController extends Controller
             }
         });
 
-        return redirect()->route('pesanan.index')->with('success', 'Order created successfully.');
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil ditambahkan.');
     }
 
     /**
@@ -125,7 +125,7 @@ class PesananController extends Controller
             }
         });
 
-        return redirect()->route('pesanan.index')->with('success', 'Order updated successfully.');
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil diubah.');
     }
 
     /**

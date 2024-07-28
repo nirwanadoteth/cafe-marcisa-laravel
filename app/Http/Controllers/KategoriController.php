@@ -74,7 +74,7 @@ class KategoriController extends Controller
 
         $kategori->update($validated);
 
-        return redirect(route('kategori.index'))->with('success', 'Category updated successfully.');
+        return redirect(route('kategori.index'))->with('success', 'Katagori berhasil diubah.');
     }
 
     /**
