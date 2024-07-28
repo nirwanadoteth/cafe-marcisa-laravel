@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('pesanan', PesananController::class);
     Route::resource('nota', NotaController::class);
+    Route::get('/nota/{pesanan}/process', [NotaController::class, 'process'])->name('nota.process');
+    Route::get('/nota/{pesanan}/pdf', [NotaController::class, 'generatePdf'])->name('nota.pdf');
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     Route::post('/laporan/data', [LaporanController::class, 'fetchData'])->name('laporan.fetchData');
     Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
