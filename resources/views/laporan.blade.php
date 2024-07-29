@@ -93,9 +93,6 @@
                 <td class="font-medium" colspan="3">{{ number_format($nota->sum('Total_Harga')) }}</td>
             </tr>
     </table>
-    <script>
-        console.log($data);
-    </script>
 </body>
 
 </html>

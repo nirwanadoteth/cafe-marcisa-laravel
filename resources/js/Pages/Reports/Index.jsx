@@ -11,7 +11,7 @@ import { fromZonedTime } from "date-fns-tz";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import axios from "axios";
 import SelectInput from "@/Components/SelectInput";
 
@@ -130,12 +130,17 @@ const NotaList = ({ nota }) => {
     );
 };
 
-export default function Index({ auth }) {
+export default function Index({ user }) {
+    const isOwner = user.Role === "Owner";
+
     const [selectedLabel, setSelectedLabel] = useState(
         predefinedRanges[0].label
     );
+
     const [range, setRange] = useState(predefinedRanges[0].range());
+
     const [nota, setNota] = useState([]);
+
     const { post, processing } = useForm({});
 
     const handleRangeChange = useCallback(
@@ -190,9 +195,14 @@ export default function Index({ auth }) {
         }
     };
 
+    if (!isOwner) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Laporan

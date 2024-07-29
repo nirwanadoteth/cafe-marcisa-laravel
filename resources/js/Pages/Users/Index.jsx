@@ -5,12 +5,14 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import DangerButton from "@/Components/DangerButton";
 import { Dialog, DialogBackdrop, DialogTitle } from "@headlessui/react";
 
-export default function Index({ auth, user }) {
+export default function Index({ current_user, user }) {
+    const isOwner = current_user.Role === "Owner";
+
     const {
         data,
         setData,
@@ -27,6 +29,7 @@ export default function Index({ auth, user }) {
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [userIdToDelete, setUserIdToDelete] = useState(null);
 
     useEffect(() => {
@@ -57,9 +60,14 @@ export default function Index({ auth, user }) {
         });
     };
 
+    if (!isOwner) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={current_user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     User

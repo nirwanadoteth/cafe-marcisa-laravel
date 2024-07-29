@@ -54,54 +54,78 @@ export default function Authenticated({ user, header, children }) {
                                     Beranda
                                 </NavLink>
                             </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("kategori.index")}
-                                    active={route().current("kategori.index")}
-                                >
-                                    Kategori
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("produk.index")}
-                                    active={route().current("produk.index")}
-                                >
-                                    Produk
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("pesanan.index")}
-                                    active={route().current("pesanan.index")}
-                                >
-                                    Pesanan
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("nota.index")}
-                                    active={route().current("nota.index")}
-                                >
-                                    Pembayaran
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("laporan.index")}
-                                    active={route().current("laporan.index")}
-                                >
-                                    Laporan
-                                </NavLink>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("user.index")}
-                                    active={route().current("user.index")}
-                                >
-                                    User
-                                </NavLink>
-                            </div>
+                            {user.Role === "Owner" || user.Role === "MKP" ? (
+                                <>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("kategori.index")}
+                                            active={route().current(
+                                                "kategori.index"
+                                            )}
+                                        >
+                                            Kategori
+                                        </NavLink>
+                                    </div>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("produk.index")}
+                                            active={route().current(
+                                                "produk.index"
+                                            )}
+                                        >
+                                            Produk
+                                        </NavLink>
+                                    </div>
+                                </>
+                            ) : null}
+                            {user.Role === "Owner" || user.Role === "Kasir" ? (
+                                <>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("pesanan.index")}
+                                            active={route().current(
+                                                "pesanan.index"
+                                            )}
+                                        >
+                                            Pesanan
+                                        </NavLink>
+                                    </div>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("nota.index")}
+                                            active={route().current(
+                                                "nota.index"
+                                            )}
+                                        >
+                                            Pembayaran
+                                        </NavLink>
+                                    </div>
+                                </>
+                            ) : null}
+                            {user.Role === "Owner" ? (
+                                <>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("laporan.index")}
+                                            active={route().current(
+                                                "laporan.index"
+                                            )}
+                                        >
+                                            Laporan
+                                        </NavLink>
+                                    </div>
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route("user.index")}
+                                            active={route().current(
+                                                "user.index"
+                                            )}
+                                        >
+                                            User
+                                        </NavLink>
+                                    </div>
+                                </>
+                            ) : null}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">

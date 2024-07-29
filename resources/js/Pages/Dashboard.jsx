@@ -10,7 +10,7 @@ export default function Dashboard({
 }) {
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={auth}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Beranda

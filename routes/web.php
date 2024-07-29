@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
     $orderToday = Pesanan::whereDate('Tanggal', now('Asia/Jakarta'))->count();
 
     return Inertia::render('Dashboard', [
+        'auth' => auth()->user(),
         'totalCategories' => $totalCategories,
         'totalProducts' => $totalProducts,
         'favProduct' => $favProduct,

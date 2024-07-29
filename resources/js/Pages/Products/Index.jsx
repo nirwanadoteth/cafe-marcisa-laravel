@@ -4,35 +4,39 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import SelectInput from "@/Components/SelectInput";
 
-export default function Index({ auth, produk, kategori }) {
-    const { data, setData, post, patch, processing, errors, reset } = useForm({
+export default function Index({ user, produk, kategori }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
         Id_Kategori: kategori.length > 0 ? kategori[0].Id_Kategori : "",
         Nama: "",
         Harga: "",
         Status: "",
     });
 
+    const isKasir = user.Role === "Kasir";
+
     const [search, setSearch] = useState("");
+
     const submit = (e) => {
         e.preventDefault();
         post(route("produk.store"), { onSuccess: () => reset() });
-    };
-
-    const toggleStatus = (idProduk) => {
-        patch(route("produk.update", idProduk));
     };
 
     const filteredProducts = produk.filter((produk) =>
         produk.Nama.toLowerCase().includes(search.toLowerCase())
     );
 
+    if (isKasir) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Produk

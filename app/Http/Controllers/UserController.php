@@ -20,6 +20,7 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
+            'current_user' => auth()->user(),
             'user' => User::orderBy('Username')->get(),
         ]);
     }

@@ -18,6 +18,7 @@ class ProdukController extends Controller
     public function index()
     {
         return Inertia::render('Products/Index', [
+            'user' => auth()->user(),
             'produk' => Produk::with('kategori')->get(),
             'kategori' => Kategori::orderBy('Nama')->get(),
         ]);

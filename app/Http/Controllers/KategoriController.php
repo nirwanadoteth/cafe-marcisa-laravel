@@ -18,6 +18,7 @@ class KategoriController extends Controller
     public function index()
     {
         return Inertia::render('Categories/Index', [
+            'user' => auth()->user(),
             'kategori' => Kategori::all(),
         ]);
     }

@@ -32,6 +32,7 @@ class NotaController extends Controller
         $sortedPesanan = $pesananBelumDibayar->merge($pesananSudahDibayar);
 
         return Inertia::render('Payments/Index', [
+            'user' => auth()->user(),
             'pesanan' => $sortedPesanan,
         ]);
     }

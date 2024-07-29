@@ -16,7 +16,7 @@ export default function ApplicationLogo(props) {
             }}
             viewBox="0 0 316 316"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            xmlnsXodm="http://www.corel.com/coreldraw/odm/2003"
+            xmlnsxodm="http://www.corel.com/coreldraw/odm/2003"
         >
             <g id="Layer_x0020_1">
                 <metadata id="CorelCorpID_0Corel-Layer" />

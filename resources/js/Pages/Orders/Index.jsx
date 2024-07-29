@@ -1,14 +1,21 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { format } from "date-fns";
 
-export default function Index({ auth, pesanan, produk, kategori }) {
+export default function Index({ user, pesanan, produk, kategori }) {
+    const isMKP = user.Role === "MKP";
+
+    if (isMKP) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Pesanan
@@ -22,7 +29,12 @@ export default function Index({ auth, pesanan, produk, kategori }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white text-right">
                             <Link href={route("pesanan.create")}>
-                                <PrimaryButton disabled={kategori.length === 0 || produk.length === 0}>
+                                <PrimaryButton
+                                    disabled={
+                                        kategori.length === 0 ||
+                                        produk.length === 0
+                                    }
+                                >
                                     Tambah Pesanan
                                 </PrimaryButton>
                             </Link>

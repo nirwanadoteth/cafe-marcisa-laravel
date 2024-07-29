@@ -13,7 +13,9 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Reports/Index');
+        return Inertia::render('Reports/Index', [
+            'user' => auth()->user(),
+        ]);
     }
 
     public function store(Request $request)

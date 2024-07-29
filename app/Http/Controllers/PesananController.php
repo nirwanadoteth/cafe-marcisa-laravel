@@ -20,6 +20,7 @@ class PesananController extends Controller
     public function index()
     {
         return Inertia::render("Orders/Index", [
+            'user' => auth()->user(),
             'pesanan' => Pesanan::with(['pembeli', 'nota'])->orderByDesc('Tanggal')->get(),
             'produk' => Produk::where('Status', 'Aktif')->get(),
             'kategori' => Kategori::where('Status', 'Aktif')->get(),

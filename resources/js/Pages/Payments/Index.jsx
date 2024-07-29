@@ -1,17 +1,24 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { format } from "date-fns";
 
-export default function Index({ auth, pesanan }) {
+export default function Index({ user, pesanan }) {
+    const isMKP = user.Role === "MKP";
+
     const cetakNota = (idPesanan) => {
         window.open(route("nota.pdf", idPesanan), "_blank");
     };
 
+    if (isMKP) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Pembayaran

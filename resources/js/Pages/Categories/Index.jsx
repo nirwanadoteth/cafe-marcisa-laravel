@@ -4,14 +4,16 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default function Index({ auth, kategori }) {
-    const { data, setData, post, patch, processing, errors, reset } = useForm({
+export default function Index({ user, kategori }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
         Nama: "",
         Status: "",
     });
+
+    const isKasir = user.Role === "Kasir";
 
     const [search, setSearch] = useState("");
 
@@ -20,17 +22,18 @@ export default function Index({ auth, kategori }) {
         post(route("kategori.store"), { onSuccess: () => reset() });
     };
 
-    const toggleStatus = (idKategori) => {
-        patch(route("kategori.update", idKategori));
-    };
-
     const filteredKategori = kategori.filter((kategori) =>
         kategori.Nama.toLowerCase().includes(search.toLowerCase())
     );
 
+    if (isKasir) {
+        router.get("dashboard");
+        return null;
+    }
+
     return (
         <AuthenticatedLayout
-            user={auth.user}
+            user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Kategori
