@@ -78,6 +78,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // Validate input
+        $validated = $request->validate([
+            'Username' => ['required', 'string', 'max:50', Rule::unique(User::class)->ignore($user->Id_User, 'Id_User')],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'Role' => [Rule::enum(Role::class)],
+        ]);
+
         if ($request->password && !$request->current_password) {
             throw ValidationException::withMessages([
                 'current_password' => ['Password saat ini wajib diisi.'],
@@ -91,19 +98,25 @@ class UserController extends Controller
             ]);
         }
 
+        if ($request->current_password && !$request->password) {
+            throw ValidationException::withMessages([
+                'password' => ['Password baru wajib diisi.'],
+            ]);
+        }
+
+        if ($request->filled('password_confirmation') && !$request->filled('password')) {
+            throw ValidationException::withMessages([
+                'current_password' => ['Password saat ini wajib diisi.'],
+                'password' => ['Password baru wajib diisi.'],
+            ]);
+        }
+
         // check if new Password is same as old Password
         if ($request->password && Hash::check($request->password, $user->Password)) {
             throw ValidationException::withMessages([
                 'password' => ['Password baru tidak boleh sama dengan password lama.'],
             ]);
         }
-
-        // Validate input
-        $validated = $request->validate([
-            'Username' => ['required', 'string', 'max:50', Rule::unique(User::class)->ignore($user->Id_User, 'Id_User')],
-            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            'Role' => [Rule::enum(Role::class)],
-        ]);
 
         // Update user details
         $user->update([
