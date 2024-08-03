@@ -97,7 +97,6 @@ export default function Index({ current_user, user }) {
                                         onChange={(e) =>
                                             setData("Username", e.target.value)
                                         }
-                                        required
                                     />
 
                                     <InputError
@@ -122,7 +121,6 @@ export default function Index({ current_user, user }) {
                                         onChange={(e) =>
                                             setData("password", e.target.value)
                                         }
-                                        required
                                     />
 
                                     <InputError
@@ -150,7 +148,6 @@ export default function Index({ current_user, user }) {
                                                 e.target.value
                                             )
                                         }
-                                        required
                                     />
 
                                     <InputError

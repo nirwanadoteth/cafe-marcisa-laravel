@@ -169,6 +169,7 @@ export default function New({ auth, kategori, produk }) {
                                         )
                                     )}
                                 </dl>
+                                <InputError message={errors.produk} />
                                 <div className="flex items-center justify-end py-4 gap-4">
                                     <PrimaryButton disabled={processing}>
                                         Simpan

@@ -14,7 +14,7 @@ export default function Process({ auth, pesanan }) {
         setData,
         post,
         processing,
-        // errors,
+        errors,
         recentlySuccessful,
         setError,
         clearErrors,
@@ -23,7 +23,7 @@ export default function Process({ auth, pesanan }) {
         pay: "",
     });
 
-    const { errors } = usePage().props;
+    // const { errors } = usePage().props;
 
     const [subTotal, setSubTotal] = useState(0);
     const [tax, setTax] = useState(0);
