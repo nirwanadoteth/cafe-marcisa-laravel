@@ -39,9 +39,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'name' => 'required|string|max:255',
-            // 'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'Username' => 'required|string|max:255|unique:' . User::class,
+            'Username' => 'required|string|max:50|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'Role' => [Rule::enum(Role::class)],
         ]);
@@ -96,7 +94,7 @@ class UserController extends Controller
 
         // Validate input
         $validated = $request->validate([
-            'Username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($user->Id_User, 'Id_User')],
+            'Username' => ['required', 'string', 'max:50', Rule::unique(User::class)->ignore($user->Id_User, 'Id_User')],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'Role' => [Rule::enum(Role::class)],
         ]);

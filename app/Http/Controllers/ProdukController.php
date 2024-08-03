@@ -39,7 +39,7 @@ class ProdukController extends Controller
     {
         $validated = $request->validate([
             'Id_Kategori' => 'required',
-            'Nama' => 'required|string|max:30',
+            'Nama' => 'required|string|max:50',
             'Harga' => 'required|numeric',
         ]);
 
@@ -74,7 +74,7 @@ class ProdukController extends Controller
     {
         $validated = $request->validate([
             'Id_Kategori' => 'required',
-            'Nama' => 'required|string|max:30',
+            'Nama' => 'required|string|max:50',
             'Harga' => 'required|numeric',
             'Status' => [Rule::enum(Status::class)],
         ]);

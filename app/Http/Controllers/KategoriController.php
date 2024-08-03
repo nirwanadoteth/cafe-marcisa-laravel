@@ -69,7 +69,7 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $validated = $request->validate([
-            'Nama' => 'required|string|max:30',
+            'Nama' => 'required|string|max:50',
             'Status' => [Rule::enum(Status::class)],
         ]);
 

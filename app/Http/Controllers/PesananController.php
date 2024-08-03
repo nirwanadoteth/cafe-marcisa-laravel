@@ -44,7 +44,7 @@ class PesananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Nama' => 'required|string|max:255',
+            'Nama' => 'required|string|max:50',
             'produk' => 'required|array',
             'produk.*.Id_Produk' => 'required|exists:produk,Id_Produk',
             'produk.*.Jumlah' => 'required|integer|min:1',
