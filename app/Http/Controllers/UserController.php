@@ -78,6 +78,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if ($request->password && !$request->current_password) {
+            throw ValidationException::withMessages([
+                'current_password' => ['Password saat ini wajib diisi.'],
+            ]);
+        }
+
         // Check current Password if provided
         if ($request->current_password && !Hash::check($request->current_password, $user->Password)) {
             throw ValidationException::withMessages([
