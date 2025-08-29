@@ -4,9 +4,6 @@
 name: Build and deploy PHP app to Azure Web App - marcisa
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -81,4 +78,5 @@ jobs:
           app-name: 'marcisa'
           slot-name: 'Production'
           package: .
+
           
